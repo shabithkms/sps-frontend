@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import Sidebar from "../Components/AdminSidebar/Sidebar";
+import Dashboard from "../Components/AdminDashboard/Dashboard";
 import { useNavigate } from "react-router";
-import Login from "../Components/AdminLogin/Login";
 
-function AdminLogin() {
+function AdminHome(props) {
+  console.log(props);
   const navigate = useNavigate();
   useEffect(() => {
     let ADMIN = process.env.REACT_APP_ADMIN;
@@ -17,10 +19,13 @@ function AdminLogin() {
   }, []);
 
   return (
-    <div>
-      <Login />
+    <div className="d-flex">
+      <Sidebar props={props} />
+      <div className="p-3">
+        <Dashboard />
+      </div>
     </div>
   );
 }
 
-export default AdminLogin;
+export default AdminHome;
