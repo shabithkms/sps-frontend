@@ -1,4 +1,4 @@
-import "./Login.css";
+import "./TeacherLogin.css";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -20,7 +20,9 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const doAdminLogin = () => {
+  const doTeacherLogin = () => {
+    let url = process.env.REACT_APP_URL;
+
     let pattern = /\S+@\S+\.\S+/;
     let result = pattern.test(email);
     if (email === "" && password === "") {
@@ -33,24 +35,14 @@ function Login() {
       setAlert("Enter a valid email");
     } else {
       try {
-        let ADMIN = process.env.REACT_APP_ADMIN;
-        let PASSWORD = process.env.REACT_APP_PASSWORD;
-        if (ADMIN === email) {
-          if (PASSWORD === password) {
-            let Admin = {
-              ADMIN,
-            };
-            localStorage.setItem("Admin", JSON.stringify(Admin));
-            navigate("/admin");
-          } else {
-            setOpen(true);
-          }
-        } else {
-          setOpen(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+        let teacherData = {
+          email,
+          password
+        };
+        axios.post(`${url}/teacher/login`,teacherData).then((response) => {
+          console.log(response);
+        });
+      } catch (error) {}
     }
   };
 
@@ -61,7 +53,7 @@ function Login() {
   return (
     <div className="main-div container">
       <div className="login shadow  bg-light rounded col-md-6 text-center">
-        <h1>Admin Login</h1>
+        <h1>Teacher Login</h1>
         <Collapse in={open}>
           <Alert severity="error" sx={{ mb: 2 }}>
             Invalid email or password
@@ -108,7 +100,7 @@ function Login() {
         <button
           className="btn login-btn"
           onClick={() => {
-            doAdminLogin();
+            doTeacherLogin();
           }}
         >
           Login

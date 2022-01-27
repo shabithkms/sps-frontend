@@ -1,7 +1,6 @@
 .main-div{
     display: flex;
-    justify-content: center;
-    
+    justify-content: center;    
 }
 .login{
     background-color: white;

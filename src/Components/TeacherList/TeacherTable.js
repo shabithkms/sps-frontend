@@ -17,6 +17,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import SweetAlert from "react-bootstrap-sweetalert/dist/components/SweetAlert";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,18 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 const style = {
   position: "absolute",
   top: "40%",
@@ -69,7 +58,9 @@ export default function TeacherTable() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [teachers, setTeachers] = useState([]);
+  const [teacherId, setTeacherId] = useState("");
   const [open, setOpen] = useState(false);
+  const [swalShow, setSwalShow] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   let teacherData = {
@@ -80,6 +71,8 @@ export default function TeacherTable() {
     try {
       axios.post(`${url}/admin/addTeacher`, teacherData).then((response) => {
         handleClose();
+        setName("");
+        setEmail("");
       });
     } catch (error) {
       console.log(error);
@@ -90,25 +83,27 @@ export default function TeacherTable() {
       axios.get(`${url}/admin/getTeacher`).then((response) => {
         console.log(response.data[0]);
         setTeachers(response.data);
-        console.log(teachers);
       });
     } catch (error) {
       console.log(error);
     }
   };
-  const deleteTeacher=(teacherId)=>{
+  const deleteTeacher = (teacherId) => {
+    console.log("fn calling");
     try {
-        axios.post(`${url}/admin/deleteTeacher/:${teacherId}`).then((response)=>{
-            console.log(response.data);
-        })
-    } catch (error) {
-        
-    }
-  }
+      axios
+        .post(`${url}/admin/deleteTeacher/:${teacherId}`)
+        .then((response) => {
+          setTeacherId("");
+          setSwalShow(false);
+          console.log("deleted");
+        });
+    } catch (error) {}
+  };
 
   useEffect(() => {
     getTeachers();
-  }, [open]);
+  }, [open, swalShow]);
 
   return (
     <div>
@@ -143,9 +138,15 @@ export default function TeacherTable() {
                       {obj.email}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      <button className="btn btn-danger" onClick={()=>{
-                          deleteTeacher(obj._id)
-                      }}>Delete</button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          setSwalShow(true);
+                          setTeacherId(obj._id);
+                        }}
+                      >
+                        Delete
+                      </button>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))
@@ -210,6 +211,32 @@ export default function TeacherTable() {
           </Box>
         </Fade>
       </Modal>
+      <SweetAlert
+        warning
+        show={swalShow}
+        customButtons={
+          <>
+            <button
+              className="btn btn-light m-3"
+              onClick={() => {
+                setSwalShow(false);
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-danger m-3"
+              onClick={() => {
+                deleteTeacher(teacherId);
+              }}
+            >
+              Delete
+            </button>
+          </>
+        }
+      >
+        Are you sure to delete Teacher?
+      </SweetAlert>
     </div>
   );
 }

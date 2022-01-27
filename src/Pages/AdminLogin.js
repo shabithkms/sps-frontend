@@ -7,7 +7,6 @@ function AdminLogin() {
   useEffect(() => {
     let ADMIN = process.env.REACT_APP_ADMIN;
     let Admin = localStorage.getItem("Admin");
-    console.log(Admin);
     if (Admin) {
       navigate("/admin");
     } else {
@@ -18,7 +17,7 @@ function AdminLogin() {
 
   return (
     <div>
-      <Login />
+      <Login Admin={true}/>
     </div>
   );
 }
