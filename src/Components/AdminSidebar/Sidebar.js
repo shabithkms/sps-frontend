@@ -11,7 +11,6 @@ import PersonIcon from "@mui/icons-material/PersonOutlined";
 import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import { useNavigate } from "react-router";
 
-
 const drawerWidth = 200;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -26,12 +25,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Sidebar(props) {
   console.log(props);
   const [open, setOpen] = React.useState(true);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const doLogout=()=>{
-      localStorage.removeItem('Admin')
-      navigate('/admin/login')
-  }
+  const doLogout = () => {
+    localStorage.removeItem("Admin");
+    navigate("/admin/login");
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -52,21 +51,38 @@ export default function Sidebar(props) {
           <h2 className="logo ">SPS.</h2>
         </DrawerHeader>
         <List className="mt-5">
-          <ListItem button key={"Dashboard"} onClick={()=>{navigate('/admin')}}>
+          <ListItem
+            button
+            key={"Dashboard"}
+            onClick={() => {
+              navigate("/admin");
+            }}
+          >
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
-          <ListItem button key={"Teachers"} onClick={()=>{navigate('/admin/teachers')}}>
+          <ListItem
+            button
+            key={"Teachers"}
+            onClick={() => {
+              navigate("/admin/teachers");
+            }}
+          >
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
             <ListItemText primary={"Teachers"} />
           </ListItem>
-          <ListItem button key={"Logout"} className={""} onClick={()=>{
-              doLogout()    
-          }}>
+          <ListItem
+            button
+            key={"Logout"}
+            className={""}
+            onClick={() => {
+              doLogout();
+            }}
+          >
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>

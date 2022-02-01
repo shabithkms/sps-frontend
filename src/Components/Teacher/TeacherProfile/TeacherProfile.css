@@ -1,0 +1,15 @@
+.teacherProfile-mainDiv {
+  display: flex;
+  justify-content: center;
+}
+.teacherProfile-div {
+  background-color: white;
+  align-items: center;
+  height: 31em;
+  width: 40em;
+  padding: 2em 4em;
+  margin-top: 3em;
+}
+.profile-details{
+    font-size: 100px;
+}

@@ -20,7 +20,7 @@ function AdminHome(props) {
 
   return (
     <div className="d-flex">
-      <Sidebar props={props} />
+      <Sidebar  />
       <div className="p-3">
         <Dashboard />
       </div>

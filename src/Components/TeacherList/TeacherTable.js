@@ -16,6 +16,7 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Alert from "@mui/material/Alert";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert/dist/components/SweetAlert";
 
@@ -45,7 +46,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  height: 350,
+  height: 400,
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
@@ -59,6 +60,7 @@ export default function TeacherTable() {
   const [email, setEmail] = useState("");
   const [teachers, setTeachers] = useState([]);
   const [teacherId, setTeacherId] = useState("");
+  const [alert, setAlert] = useState("");
   const [open, setOpen] = useState(false);
   const [swalShow, setSwalShow] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -68,20 +70,37 @@ export default function TeacherTable() {
     email,
   };
   const addTeacher = () => {
-    try {
-      axios.post(`${url}/admin/addTeacher`, teacherData).then((response) => {
-        handleClose();
-        setName("");
-        setEmail("");
-      });
-    } catch (error) {
-      console.log(error);
+    let pattern = /\S+@\S+\.\S+/;
+    let result = pattern.test(email);
+    if (email === "" && name === "") {
+      setAlert("Both fields are required");
+    } else if (email === "") {
+      setAlert("Email is required");
+    } else if (name === "") {
+      setAlert("Name is required");
+    } else if (!result) {
+      setAlert("Enter a valid email");
+    } else {
+      try {
+        axios
+          .post(`${url}/admin/addTeacher`, teacherData)
+          .then((response) => {
+            handleClose();
+            setName("");
+            setEmail("");
+          })
+          .catch((err) => {
+            setAlert(err.response.data.errors);
+          });
+      } catch (error) {
+        // setAlert(error)
+        // console.log(error.message);
+      }
     }
   };
   const getTeachers = () => {
     try {
       axios.get(`${url}/admin/getTeacher`).then((response) => {
-        console.log(response.data[0]);
         setTeachers(response.data);
       });
     } catch (error) {
@@ -89,7 +108,6 @@ export default function TeacherTable() {
     }
   };
   const deleteTeacher = (teacherId) => {
-    console.log("fn calling");
     try {
       axios
         .post(`${url}/admin/deleteTeacher/:${teacherId}`)
@@ -176,6 +194,13 @@ export default function TeacherTable() {
             >
               Add new Teacher
             </Typography>
+            {alert ? (
+              <Alert className="mb-3 mt-2" severity="error">
+                {alert}
+              </Alert>
+            ) : (
+              ""
+            )}
             <TextField
               margin="normal"
               required
@@ -183,7 +208,10 @@ export default function TeacherTable() {
               name="Name"
               label="Name"
               type="Text"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                setAlert("");
+              }}
               value={name}
               id="Name"
             />
@@ -194,10 +222,14 @@ export default function TeacherTable() {
               name="Email"
               label="Email"
               type="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setAlert("");
+              }}
               value={email}
               id="Email"
             />
+
             <center>
               <button
                 className="btn login-btn"
@@ -225,6 +257,7 @@ export default function TeacherTable() {
               Cancel
             </button>
             <button
+              autoFocus
               className="btn btn-danger m-3"
               onClick={() => {
                 deleteTeacher(teacherId);
