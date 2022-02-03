@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./TeacherProfile.css";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 
 function TeacherProfile() {
+  let navigate = useNavigate();
   let url = process.env.REACT_APP_URL;
   const { id } = useParams();
   const [teacherData, setTeacherData] = useState({});
@@ -36,9 +37,14 @@ function TeacherProfile() {
           <h6>Address : {teacherData.address ? teacherData.address : ""}</h6>
         </div>
         <div>
-            <button className="btn login-btn">
-                Edit
-            </button>
+          <button
+            className="btn edit-btn"
+            onClick={() => {
+              navigate(`/teacher/editProfile/${id}`);
+            }}
+          >
+            Edit
+          </button>
         </div>
       </div>
     </div>

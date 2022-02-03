@@ -5,11 +5,31 @@
 .teacherProfile-div {
   background-color: white;
   align-items: center;
-  height: 31em;
+  height: fit-content;
   width: 40em;
   padding: 2em 4em;
   margin-top: 3em;
 }
-.profile-details{
-    font-size: 100px;
+.edit-btn {
+  background-color: #00d2b5;
+  color: white;
+  width: 8em;
+  margin-top: 1em;
+}
+.editProfileMain {
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+}
+.editProfile {
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  background-image: url(../../../Assets/Images/profile.svg);
+}
+.cropped-image{
+  width: 100px;
+  height: 100px;
+
 }

@@ -1,24 +1,31 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "./TeacherTable.css";
+// import "./TeacherTable.css";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Alert from "@mui/material/Alert";
+import { tableCellClasses } from "@mui/material/TableCell";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert/dist/components/SweetAlert";
+import {
+  InputLabel,
+  FormControl,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Backdrop,
+  Box,
+  Modal,
+  Fade,
+  Typography,
+  TextField,
+  Alert,
+} from "@mui/material";
+import { minWidth } from "@mui/system";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,7 +53,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  height: 400,
+  height: 320,
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
@@ -54,81 +61,95 @@ const style = {
   alignItems: "center",
 };
 
-export default function TeacherTable() {
+function Domains() {
   let url = process.env.REACT_APP_URL;
+  const [domains, setDomain] = useState([]);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [teachers, setTeachers] = useState([]);
-  const [teacherId, setTeacherId] = useState("");
+  const [domainId, setDomainId] = useState("");
   const [alert, setAlert] = useState("");
   const [open, setOpen] = useState(false);
   const [swalShow, setSwalShow] = useState(false);
+  const [age, setAge] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  let teacherData = {
-    name,
-    email,
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
-  const addTeacher = () => {
-    let pattern = /\S+@\S+\.\S+/;
-    let result = pattern.test(email);
-    if (email === "" && name === "") {
-      setAlert("Both fields are required");
-    } else if (email === "") {
-      setAlert("Email is required");
-    } else if (name === "") {
-      setAlert("Name is required");
-    } else if (!result) {
-      setAlert("Enter a valid email");
-    } else {
-      try {
+
+  const addNewDomain = () => {
+    try {
+      if (!name === "") {
         axios
-          .post(`${url}/admin/addTeacher`, teacherData)
-          .then((response) => {
-            handleClose();
+          .post(`${url}/teacher/addNewDomain`, { name })
+          .then((res) => {
+            console.log(res.data);
+            setOpen(false);
             setName("");
-            setEmail("");
           })
           .catch((err) => {
             setAlert(err.response.data.errors);
           });
-      } catch (error) {
-        // setAlert(error)
-        // console.log(error.message);
+      } else {
+        setAlert("This field is required");
       }
-    }
-  };
-  const getTeachers = () => {
-    try {
-      axios.get(`${url}/admin/getTeacher`).then((response) => {
-        setTeachers(response.data);
-      });
     } catch (error) {
       console.log(error);
     }
   };
-  const deleteTeacher = (teacherId) => {
+  const getDomains = () => {
     try {
       axios
-        .post(`${url}/admin/deleteTeacher/:${teacherId}`)
-        .then((response) => {
-          setTeacherId("");
-          setSwalShow(false);
-          console.log("deleted");
+        .get(`${url}/teacher/getDomains`)
+        .then((res) => {
+          console.log(res.data.domains);
+          setDomain(res.data.domains);
+        })
+        .catch((err) => {
+          setAlert(err.response.data.errors);
         });
     } catch (error) {}
   };
-
+  const deleteDomain = () => {
+    try {
+      axios
+        .post(`${url}/teacher/deleteDomain`, { domainId })
+        .then((res) => {
+          console.log(res.data);
+          setDomainId("");
+          setSwalShow(false);
+        })
+        .catch((err) => {
+          setDomainId("");
+        });
+    } catch (error) {}
+  };
   useEffect(() => {
-    getTeachers();
+    getDomains();
   }, [open, swalShow]);
-
   return (
     <div>
-      <div className="mb-3 mt-2 ml-auto">
-        <button className="add-btn btn " onClick={handleOpen}>
+      <div className="mb-3 mt-2 d-flex">
+        <button className="add-btn btn" onClick={handleOpen}>
           Add new
         </button>
+        {/* <Box sx={{ minWidth: 200, maxWidth: 220, marginLeft: 4 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              Select students
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="select students"
+              onChange={handleChange}
+            >
+              <MenuItem value={"Active"} selected>Active</MenuItem>
+              <MenuItem value={"Placed"} >Placed</MenuItem>
+              <MenuItem value={"Terminated"}>Terminated</MenuItem>
+            </Select>
+          </FormControl>
+        </Box> */}
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -136,31 +157,29 @@ export default function TeacherTable() {
             <TableRow>
               <StyledTableCell>No</StyledTableCell>
               <StyledTableCell align="center">Name</StyledTableCell>
-              <StyledTableCell align="center">Email</StyledTableCell>
-              <StyledTableCell align="center">Phone</StyledTableCell>
+              <StyledTableCell align="center">No of students</StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {teachers
-              ? teachers.map((obj, index) => (
+            {domains
+              ? domains.map((obj, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
                       {index + 1}
                     </StyledTableCell>
-                    <StyledTableCell align="center">{obj.name}</StyledTableCell>
                     <StyledTableCell align="center">
-                      {obj.email}
+                      {obj.DomainName}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {obj.mobile}
+                      {obj.email}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <button
                         className="btn btn-danger"
                         onClick={() => {
                           setSwalShow(true);
-                          setTeacherId(obj._id);
+                          setDomainId(obj._id);
                         }}
                       >
                         Delete
@@ -192,7 +211,7 @@ export default function TeacherTable() {
               component="h1"
               fontWeight={"500"}
             >
-              Add new Teacher
+              Add new Domain
             </Typography>
             {alert ? (
               <Alert className="mb-3 mt-2" severity="error">
@@ -215,26 +234,12 @@ export default function TeacherTable() {
               value={name}
               id="Name"
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Email"
-              label="Email"
-              type="Email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setAlert("");
-              }}
-              value={email}
-              id="Email"
-            />
 
             <center>
               <button
                 className="btn login-btn"
                 onClick={() => {
-                  addTeacher();
+                  addNewDomain();
                 }}
               >
                 Add
@@ -260,7 +265,7 @@ export default function TeacherTable() {
               autoFocus
               className="btn btn-danger m-3"
               onClick={() => {
-                deleteTeacher(teacherId);
+                deleteDomain(domainId);
               }}
             >
               Delete
@@ -268,8 +273,10 @@ export default function TeacherTable() {
           </>
         }
       >
-        Are you sure to delete Teacher?
+        Are you sure to delete Domain?
       </SweetAlert>
     </div>
   );
 }
+
+export default Domains;
