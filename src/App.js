@@ -10,6 +10,7 @@ import TeacherProfile from "./Pages/TeacherProfile";
 import EditTeacherProfile from "./Pages/EditTeacherProfile";
 import Students from "./Pages/StudentManagement";
 import Domains from "./Pages/DomainManagement";
+import Batches from "./Pages/TeacherBatchManagement";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
 
         {/* Domain management */}
         <Route path="/teacher/domains" element={<Domains />}></Route>
+        {/* Batch Management */}
+        <Route path="/teacher/batches" element={<Batches />}></Route>
       </Routes>
     </div>
   );

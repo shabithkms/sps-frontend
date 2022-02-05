@@ -4,7 +4,7 @@ import EditProfile from "../Components/Teacher/TeacherProfile/EditTeacherProfile
 
 function EditTeacherProfile() {
   return (
-    <div className="d-flex">
+    <div className="">
       <TeacherSideBar />
       <div className="p-3">
         <EditProfile />

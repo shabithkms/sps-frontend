@@ -65,7 +65,7 @@ function TeacherSideBar() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        <DrawerHeader style={{cursor:'pointer'}} onClick={()=>navigate('/teacher')}>
           <h2 className="logo ">SPS.</h2>
         </DrawerHeader>
         <div

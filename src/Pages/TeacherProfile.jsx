@@ -4,10 +4,12 @@ import Profile from "../Components/Teacher/TeacherProfile/TeacherProfile";
 
 function TeacherProfile() {
   return (
-    <div className="d-flex">
+    <div className="">
       <SideBar />
-      <div className="p-3">
+      <div className="">
+        {/* <div> */}
         <Profile />
+        {/* </div> */}
       </div>
     </div>
   );
