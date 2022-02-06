@@ -1,16 +1,16 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
-import AdminLogin from "./Pages/AdminLogin";
+import AdminLogin from "./Pages/Admin/AdminLogin";
 import TeacherLogin from "./Pages/TeacherLogin";
 import TeacherSignup from "./Pages/TeacherSignup";
-import AdminHome from "./Pages/AdminHome";
-import TeacherList from "./Pages/TeacherList";
+import AdminHome from "./Pages/Admin/AdminHome";
+import TeacherList from "./Pages/Admin/TeacherList";
 import TeacherHome from "./Pages/TeacherHome";
 import TeacherProfile from "./Pages/TeacherProfile";
 import EditTeacherProfile from "./Pages/EditTeacherProfile";
 import Students from "./Pages/StudentManagement";
 import Domains from "./Pages/DomainManagement";
-import Batches from "./Pages/TeacherBatchManagement";
+import Batches from "./Pages/Admin/BatchManagement";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminHome />}></Route>
         <Route path="/admin/teachers" element={<TeacherList />}></Route>
+        <Route path="/admin/batches" element={<Batches />}></Route>
         <Route path="/admin/login" element={<AdminLogin />}></Route>
 
         {/* Teacher routes */}
@@ -37,8 +38,7 @@ function App() {
 
         {/* Domain management */}
         <Route path="/teacher/domains" element={<Domains />}></Route>
-        {/* Batch Management */}
-        <Route path="/teacher/batches" element={<Batches />}></Route>
+        
       </Routes>
     </div>
   );

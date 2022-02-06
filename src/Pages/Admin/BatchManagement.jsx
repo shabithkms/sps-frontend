@@ -1,6 +1,6 @@
 import React from "react";
-import SideBar from "../Components/Teacher/TeacherHome/TeacherSideBar";
-import Batches from "../Components/Teacher/BatchManagement/Batches";
+import SideBar from "../../Components/Admin/AdminSidebar/Sidebar";
+import Batches from "../../Components/Admin/BatchManagement/Batches";
 
 function TeacherBatchManagement() {
   return (

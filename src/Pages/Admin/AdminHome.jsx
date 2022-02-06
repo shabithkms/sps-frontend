@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Sidebar from "../Components/AdminSidebar/Sidebar";
-import Dashboard from "../Components/AdminDashboard/Dashboard";
+import Sidebar from "../../Components/Admin/AdminSidebar/Sidebar";
+import Dashboard from "../../Components/Admin/AdminDashboard/Dashboard";
 import { useNavigate } from "react-router";
 
 function AdminHome(props) {

@@ -1,6 +1,6 @@
 import React from "react";
-import Sidebar from "../Components/AdminSidebar/Sidebar";
-import TeacherTable from "../Components/TeacherList/TeacherTable";
+import Sidebar from "../../Components/Admin/AdminSidebar/Sidebar";
+import TeacherTable from "../../Components/Admin/TeacherList/TeacherTable";
 
 function AdminHome(props) {
   console.log(props);

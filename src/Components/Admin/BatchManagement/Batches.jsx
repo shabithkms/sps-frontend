@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import "./TeacherTable.css";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert/dist/components/SweetAlert";
-import Form from 'react-bootstrap/Form'
+import { useForm } from "react-hook-form";
 import {
   InputLabel,
   FormControl,
@@ -53,7 +52,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  height: 500,
+  height: 400,
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
@@ -64,7 +63,6 @@ const style = {
 function Batches() {
   let url = process.env.REACT_APP_URL;
   const [domains, setDomain] = useState([]);
-  const [name, setName] = useState("");
   const [domainId, setDomainId] = useState("");
   const [alert, setAlert] = useState("");
   const [open, setOpen] = useState(false);
@@ -72,8 +70,34 @@ function Batches() {
   const [age, setAge] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {},
+  });
   const handleChange = (event) => {
     setAge(event.target.value);
+  };
+  const addBatch = (data) => {
+    console.log(data);
+    try {
+      axios
+        .post(`${url}/admin/addBatch`, data)
+        .then((res) => {
+          console.log(res.data.message);
+        })
+        .catch((err) => {
+          console.log(err.response.data.errors);
+          setAlert(err.response.data.errors)
+          setTimeout(() => {
+            setAlert('')
+          }, 3000);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -87,24 +111,6 @@ function Batches() {
             Add new
           </button>
         </div>
-        {/* <Box sx={{ minWidth: 200, maxWidth: 220, marginLeft: 4 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">
-          Select students
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="select students"
-          onChange={handleChange}
-        >
-          <MenuItem value={"Active"} selected>Active</MenuItem>
-          <MenuItem value={"Placed"} >Placed</MenuItem>
-          <MenuItem value={"Terminated"}>Terminated</MenuItem>
-        </Select>
-      </FormControl>
-    </Box> */}
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -176,50 +182,54 @@ function Batches() {
             ) : (
               ""
             )}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Name"
-              label="Name"
-              type="Text"
-              onChange={(e) => {
-                setName(e.target.value);
-                setAlert("");
-              }}
-              value={name}
-              id="Name"
-            />
-            {/* <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Name"
-              label="Email"
-              type="Text"
-              onChange={(e) => {
-                setName(e.target.value);
-                setAlert("");
-              }}
-              value={name}
-              id="Name"
-            /> */}
-            <Form.Select aria-label="Default select example">
-              <option>Select place</option>
-              <option value="Calicut">Calicut</option>
-              <option value="Kochi">Kochi</option>
-            </Form.Select>
+            <form onSubmit={handleSubmit(addBatch)}>
+              <TextField
+                margin="normal"
+                fullWidth
+                autoCapitalize="on"
+                {...register("BatchName", {
+                  required: "This field is required",
+                  minLength: {
+                    value: 4,
+                    message: "Minimum 4 characters required",
+                  },
+                  maxLength: {
+                    value: 10,
+                    message: "Maximum 10 characters allowed",
+                  },
+                })}
+                label="Name"
+                type="Text"
+                id="Name"
+              />
+              {errors.BatchName && (
+                <span className="error">{errors.BatchName.message}</span>
+              )}
+              <FormControl fullWidth className="mt-3">
+                <InputLabel id="demo-simple-select-label">
+                  Select Place
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  {...register("Place", { required: true })}
+                  label="select students"
+                  onChange={handleChange}
+                >
+                  <MenuItem selected>Select place</MenuItem>
+                  <MenuItem value={"Calicut"}>Calicut</MenuItem>
+                  <MenuItem value={"Kochi"}>Kochi</MenuItem>
+                </Select>
+                {errors.Place && (
+                  <span className="error">This field is required</span>
+                )}
+              </FormControl>
 
-            <center>
-              <button
-                className="btn login-btn"
-                onClick={() => {
-                  //   addNewDomain();
-                }}
-              >
-                Add
-              </button>
-            </center>
+              <center>
+                <button className="btn login-btn">Add</button>
+              </center>
+            </form>
           </Box>
         </Fade>
       </Modal>

@@ -12,14 +12,12 @@ import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import ArticleIcon from "@mui/icons-material/Article";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import GroupsIcon from "@mui/icons-material/Groups";
-import EventIcon from "@mui/icons-material/Event";
 import DnsIcon from "@mui/icons-material/Dns";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import "./Teacher.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 
 const drawerWidth = 200;
 
@@ -35,6 +33,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 function TeacherSideBar() {
   const [teacherName, setTeacherName] = useState("");
   const [teacherId, setTeacherId] = useState("");
+  const [profile, setProfile] = useState("");
   const navigate = useNavigate();
   let open = true;
   const doTeacherLogout = () => {
@@ -44,8 +43,10 @@ function TeacherSideBar() {
 
   useEffect(() => {
     let teacher = JSON.parse(localStorage.getItem("teacher"));
+    console.log(teacher);
     if (teacher) {
       setTeacherName(teacher.name);
+      setProfile(teacher.profile);
       setTeacherId(teacher._id);
     }
   }, []);
@@ -65,7 +66,10 @@ function TeacherSideBar() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader style={{cursor:'pointer'}} onClick={()=>navigate('/teacher')}>
+        <DrawerHeader
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/teacher")}
+        >
           <h2 className="logo ">SPS.</h2>
         </DrawerHeader>
         <div
@@ -74,7 +78,21 @@ function TeacherSideBar() {
           }}
         >
           <div className="container teacherProfileMain">
-            <div className="teacherProfile"></div>
+            <div className="">
+              {profile ? (
+                <img
+                  src={profile}
+                  alt=""
+                  style={{ width: 60, height: 60, borderRadius: 500 }}
+                />
+              ) : (
+                <img
+                  className="editProfile"
+                  alt=""
+                  style={{ width: 60, height: 60, borderRadius: 500 }}
+                />
+              )}
+            </div>
           </div>
           <div className="teacherProfileMain">
             <div>
@@ -142,18 +160,6 @@ function TeacherSideBar() {
               <GroupsIcon />
             </ListItemIcon>
             <ListItemText primary={"Reviewers"} />
-          </ListItem>
-          <ListItem
-            button
-            key={"Batches"}
-            onClick={() => {
-              navigate("/teacher/batches");
-            }}
-          >
-            <ListItemIcon>
-              <EventIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Batches"} />
           </ListItem>
           <ListItem
             button

@@ -47,8 +47,9 @@ function TeacherProfile() {
   };
   const getCroppedImage = async () => {
     let fileName = teacherData._id;
-    console.log(fileName);
+    console.log("id", fileName);
     let blob = await cropper.getCroppedImg(image, crop, fileName);
+    console.log("blob", blob);
     setBlob(blob);
     var reader = new FileReader();
     reader.readAsDataURL(blob);

@@ -1,14 +1,17 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import {
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  Box,
+  Drawer,
+  List,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 import PersonIcon from "@mui/icons-material/PersonOutlined";
 import LogoutIcon from "@mui/icons-material/LogoutOutlined";
+import EventIcon from "@mui/icons-material/Event";
 import { useNavigate } from "react-router";
 
 const drawerWidth = 200;
@@ -74,6 +77,18 @@ export default function Sidebar(props) {
               <PersonIcon />
             </ListItemIcon>
             <ListItemText primary={"Teachers"} />
+          </ListItem>
+          <ListItem
+            button
+            key={"Batches"}
+            onClick={() => {
+              navigate("/admin/batches");
+            }}
+          >
+            <ListItemIcon>
+              <EventIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Batches"} />
           </ListItem>
           <ListItem
             button
