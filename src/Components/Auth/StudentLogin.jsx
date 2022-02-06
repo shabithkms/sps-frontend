@@ -25,6 +25,7 @@ function Signup() {
         .then((res) => {
           console.log(res.data.message);
           toast.success(res.data.message);
+          localStorage.setItem("Student", JSON.stringify(res.data.student));
           setTimeout(() => {
             navigate("/");
           }, 1500);

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router";
-import StudentLogin from "../../Components/Auth/StudentLogin";
+import { useNavigate } from "react-router";
+import Header from "../../Components/Student/Header";
 
-function Login() {
-  const navigate=useNavigate()
+function Home() {
+  const navigate = useNavigate();
   useEffect(() => {
     let student = localStorage.getItem("student");
     if (student) {
@@ -12,12 +12,12 @@ function Login() {
       navigate("/login");
     }
   }, []);
-
   return (
     <div>
-      <StudentLogin />
+      <Header />
+      <h1>Homepage</h1>
     </div>
   );
 }
 
-export default Login;
+export default Home;
