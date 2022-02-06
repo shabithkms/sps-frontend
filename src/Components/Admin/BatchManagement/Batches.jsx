@@ -5,6 +5,7 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert/dist/components/SweetAlert";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import {
   InputLabel,
   FormControl,
@@ -62,8 +63,8 @@ const style = {
 
 function Batches() {
   let url = process.env.REACT_APP_URL;
-  const [domains, setDomain] = useState([]);
-  const [domainId, setDomainId] = useState("");
+  const [batches, setBatches] = useState([]);
+  const [batchId, setbatchId] = useState("");
   const [alert, setAlert] = useState("");
   const [open, setOpen] = useState(false);
   const [swalShow, setSwalShow] = useState(false);
@@ -74,6 +75,7 @@ function Batches() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {},
   });
@@ -87,18 +89,57 @@ function Batches() {
         .post(`${url}/admin/addBatch`, data)
         .then((res) => {
           console.log(res.data.message);
+          setOpen(false);
+          toast(res.data.message);
+          reset();
         })
         .catch((err) => {
           console.log(err.response.data.errors);
-          setAlert(err.response.data.errors)
+          setAlert(err.response.data.errors);
           setTimeout(() => {
-            setAlert('')
+            setAlert("");
           }, 3000);
         });
     } catch (error) {
       console.log(error);
     }
   };
+
+  const deleteBatch = (BatchId) => {
+    try {
+      axios
+        .delete(`${url}/admin/deleteBatch/${BatchId}`)
+        .then((res) => {
+          console.log(res.data.message);
+          setSwalShow(false);
+          toast(res.data.message);
+        })
+        .catch((err) => {
+          toast(err.response.data.errors);
+        });
+    } catch (error) {
+      toast("Something error");
+    }
+  };
+
+  const getBatches = () => {
+    try {
+      axios
+        .get(`${url}/admin/getAllBatches`)
+        .then((res) => {
+          setBatches(res.data.batches);
+        })
+        .catch((err) => {
+          console.log(err.response.data.errors);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBatches();
+  }, [open, swalShow]);
 
   return (
     <div>
@@ -112,6 +153,15 @@ function Batches() {
           </button>
         </div>
       </div>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "black",
+            color: "white",
+          },
+          icon: "✅",
+        }}
+      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -119,29 +169,32 @@ function Batches() {
               <StyledTableCell>No</StyledTableCell>
               <StyledTableCell align="center">Name</StyledTableCell>
               <StyledTableCell align="center">Batch</StyledTableCell>
-              <StyledTableCell align="center">Domain</StyledTableCell>
+              <StyledTableCell align="center">No of students</StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {domains
-              ? domains.map((obj, index) => (
+            {batches
+              ? batches.map((obj, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
                       {index + 1}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {obj.DomainName}
+                      {obj.BatchName}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {obj.email}
+                      {obj.Place}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {obj.Count}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <button
                         className="btn btn-danger"
                         onClick={() => {
                           setSwalShow(true);
-                          setDomainId(obj._id);
+                          setbatchId(obj._id);
                         }}
                       >
                         Delete
@@ -250,7 +303,7 @@ function Batches() {
               autoFocus
               className="btn btn-danger m-3"
               onClick={() => {
-                // deleteDomain(domainId);
+                deleteBatch(batchId);
               }}
             >
               Delete
@@ -258,7 +311,7 @@ function Batches() {
           </>
         }
       >
-        Are you sure to delete Domain?
+        Are you sure to delete Batch?
       </SweetAlert>
     </div>
   );

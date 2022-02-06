@@ -1,16 +1,21 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
+// Impoorting Admin Pages
 import AdminLogin from "./Pages/Admin/AdminLogin";
-import TeacherLogin from "./Pages/TeacherLogin";
-import TeacherSignup from "./Pages/TeacherSignup";
 import AdminHome from "./Pages/Admin/AdminHome";
-import TeacherList from "./Pages/Admin/TeacherList";
-import TeacherHome from "./Pages/TeacherHome";
-import TeacherProfile from "./Pages/TeacherProfile";
-import EditTeacherProfile from "./Pages/EditTeacherProfile";
-import Students from "./Pages/StudentManagement";
-import Domains from "./Pages/DomainManagement";
 import Batches from "./Pages/Admin/BatchManagement";
+import TeacherList from "./Pages/Admin/TeacherList";
+
+// Importing Admin Pages
+import TeacherLogin from "./Pages/Teacher/TeacherLogin";
+import TeacherSignup from "./Pages/Teacher/TeacherSignup";
+import TeacherHome from "./Pages/Teacher/TeacherHome";
+import TeacherProfile from "./Pages/Teacher/TeacherProfile";
+import EditTeacherProfile from "./Pages/Teacher/EditTeacherProfile";
+import Students from "./Pages/Teacher/StudentManagement";
+import Domains from "./Pages/Teacher/DomainManagement";
+
+// Importing Student pages
 
 function App() {
   return (
@@ -30,15 +35,20 @@ function App() {
         <Route path="/teacher" element={<TeacherHome />}></Route>
         {/* Profile Management */}
         <Route path="/teacher/profile/:id" element={<TeacherProfile />}></Route>
-        <Route path="/teacher/editProfile/:id" element={<EditTeacherProfile />}></Route>
-        <Route path="/teacher/editProfile/:id" element={<EditTeacherProfile />}></Route>
+        <Route
+          path="/teacher/editProfile/:id"
+          element={<EditTeacherProfile />}
+        ></Route>
+        <Route
+          path="/teacher/editProfile/:id"
+          element={<EditTeacherProfile />}
+        ></Route>
 
         {/* Student management */}
         <Route path="/teacher/students" element={<Students />}></Route>
 
         {/* Domain management */}
         <Route path="/teacher/domains" element={<Domains />}></Route>
-        
       </Routes>
     </div>
   );

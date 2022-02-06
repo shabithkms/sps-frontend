@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import "./TeacherTable.css";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert/dist/components/SweetAlert";
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import {
   InputLabel,
   FormControl,
@@ -51,8 +52,8 @@ const style = {
   top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
-  height: 500,
+  width: 550,
+  height: 460,
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
@@ -62,8 +63,8 @@ const style = {
 
 function StudentTable() {
   let url = process.env.REACT_APP_URL;
-  const [domains, setDomain] = useState([]);
-  const [name, setName] = useState("");
+  const [batches, setBatches] = useState([]);
+  const [students, setStudents] = useState([]);
   const [domainId, setDomainId] = useState("");
   const [alert, setAlert] = useState("");
   const [open, setOpen] = useState(false);
@@ -71,12 +72,67 @@ function StudentTable() {
   const [age, setAge] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ defaultValues: {} });
+  const addStudent = (data) => {
+    try {
+      axios
+        .post(`${url}/teacher/addStudent`, data)
+        .then((res) => {
+          console.log(res.data.message);
+          setOpen(false);
+          toast(res.data.message);
+          reset();
+        })
+        .catch((err) => {
+          alert(err.response.data.errors);
+          console.log(err.response.data.errors);
+        });
+    } catch (error) {
+      toast(error.response.data.errors);
+    }
   };
+  const getAllStudents = () => {
+    try {
+      axios
+        .get(`${url}/teacher/getAllStudents`)
+        .then((res) => {
+          console.log(res.data.students);
+          setStudents(res.data.students);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAllBatches = () => {
+    axios.get(`${url}/teacher/getAllBatches`).then((res) => {
+      console.log(res.data.batches);
+      setBatches(res.data.batches);
+    });
+  };
+  useEffect(() => {
+    getAllBatches();
+    getAllStudents();
+  }, [open]);
 
   return (
     <div>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "black",
+            color: "white",
+          },
+          icon: "✅",
+        }}
+      />
       <div>
         <h2>All students</h2>
       </div>
@@ -86,24 +142,6 @@ function StudentTable() {
             Add new
           </button>
         </div>
-        {/* <Box sx={{ minWidth: 200, maxWidth: 220, marginLeft: 4 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">
-          Select students
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="select students"
-          onChange={handleChange}
-        >
-          <MenuItem value={"Active"} selected>Active</MenuItem>
-          <MenuItem value={"Placed"} >Placed</MenuItem>
-          <MenuItem value={"Terminated"}>Terminated</MenuItem>
-        </Select>
-      </FormControl>
-    </Box> */}
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -111,23 +149,24 @@ function StudentTable() {
             <TableRow>
               <StyledTableCell>No</StyledTableCell>
               <StyledTableCell align="center">Name</StyledTableCell>
+              <StyledTableCell align="center">Email</StyledTableCell>
               <StyledTableCell align="center">Batch</StyledTableCell>
-              <StyledTableCell align="center">Domain</StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {domains
-              ? domains.map((obj, index) => (
+            {students
+              ? students.map((obj, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
                       {index + 1}
                     </StyledTableCell>
+                    <StyledTableCell align="center">{obj.Name}</StyledTableCell>
                     <StyledTableCell align="center">
-                      {obj.DomainName}
+                      {obj.Email}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {obj.email}
+                      {obj.Batch}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <button
@@ -175,59 +214,73 @@ function StudentTable() {
             ) : (
               ""
             )}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Name"
-              label="Name"
-              type="Text"
-              onChange={(e) => {
-                setName(e.target.value);
-                setAlert("");
-              }}
-              value={name}
-              id="Name"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Name"
-              label="Email"
-              type="Text"
-              onChange={(e) => {
-                setName(e.target.value);
-                setAlert("");
-              }}
-              value={name}
-              id="Name"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Name"
-              label="Batch"
-              type="Text"
-              onChange={(e) => {
-                setName(e.target.value);
-                setAlert("");
-              }}
-              value={name}
-              id="Name"
-            />
-
-            <center>
-              <button
-                className="btn login-btn"
-                onClick={() => {
-                  //   addNewDomain();
-                }}
-              >
-                Add
-              </button>
-            </center>
+            <form onSubmit={handleSubmit(addStudent)}>
+              <TextField
+                margin="normal"
+                fullWidth
+                {...register("Name", {
+                  required: "This field is required",
+                  minLength: {
+                    value: 4,
+                    message: "Minimum 4 characters required",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Maximum 20 characters allowed",
+                  },
+                })}
+                label="Name"
+                type="Text"
+                id="Name"
+              />
+              {errors.Name && (
+                <span className="error">{errors.Name.message}</span>
+              )}
+              <TextField
+                margin="normal"
+                fullWidth
+                {...register("Email", {
+                  required: "This field is required",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "Invalid email address",
+                  },
+                })}
+                label="Email"
+                type="Text"
+                id="Email"
+              />
+              {errors.Email && (
+                <span className="error">{errors.Email.message}</span>
+              )}
+              <FormControl fullWidth className="mt-3">
+                <InputLabel id="demo-simple-select-label">
+                  Select Place
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  {...register("Batch", { required: "This field is required" })}
+                  label="select students"
+                >
+                  <MenuItem selected>Select Batch</MenuItem>
+                  {batches ? (
+                    batches.map((obj) => (
+                      <MenuItem value={obj.BatchName}>{obj.BatchName}</MenuItem>
+                    ))
+                  ) : (
+                    <span>No batches</span>
+                  )}
+                </Select>
+                {errors.Batch && (
+                  <span className="error">{errors.Batch.message}</span>
+                )}
+              </FormControl>
+              <center>
+                <button className="btn login-btn">Add</button>
+              </center>
+            </form>
           </Box>
         </Fade>
       </Modal>

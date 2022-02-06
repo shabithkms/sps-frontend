@@ -1,6 +1,6 @@
 import React from "react";
-import SideBar from "../Components/Teacher/TeacherHome/TeacherSideBar";
-import StudentTable from "../Components/Teacher/StudentManagement/StudentTable";
+import SideBar from "../../Components/Teacher/TeacherHome/TeacherSideBar";
+import StudentTable from "../../Components/Teacher/StudentManagement/StudentTable";
 
 function StudentManagement() {
   return (

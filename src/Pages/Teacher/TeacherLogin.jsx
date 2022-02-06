@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import SideBar from "../Components/Teacher/TeacherHome/TeacherSideBar";
-import Dashboard from "../Components/Teacher/TeacherHome/TeacherDashboard";
 import { useNavigate } from "react-router";
+import Login from "../../Components/Auth/TeacherLogin";
 
-function TeacherHome() {
+function TeacherLogin() {
   let navigate = useNavigate();
   useEffect(() => {
     try {
@@ -20,13 +19,10 @@ function TeacherHome() {
   }, []);
 
   return (
-    <div className="d-flex">
-      <SideBar />
-      <div className="p-3">
-        <Dashboard />
-      </div>
+    <div>
+      <Login />
     </div>
   );
 }
 
-export default TeacherHome;
+export default TeacherLogin;
