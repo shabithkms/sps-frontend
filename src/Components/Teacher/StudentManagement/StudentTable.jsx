@@ -85,15 +85,15 @@ function StudentTable() {
         .then((res) => {
           console.log(res.data.message);
           setOpen(false);
-          toast(res.data.message);
+          toast.success(res.data.message);
           reset();
         })
         .catch((err) => {
-          alert(err.response.data.errors);
+          toast.error(err.response.data.errors);
           console.log(err.response.data.errors);
         });
     } catch (error) {
-      toast(error.response.data.errors);
+      toast.error(error.response.data.errors);
     }
   };
   const getAllStudents = () => {
@@ -130,7 +130,6 @@ function StudentTable() {
             background: "black",
             color: "white",
           },
-          icon: "✅",
         }}
       />
       <div>
@@ -207,13 +206,6 @@ function StudentTable() {
             >
               Add new Student
             </Typography>
-            {alert ? (
-              <Alert className="mb-3 mt-2" severity="error">
-                {alert}
-              </Alert>
-            ) : (
-              ""
-            )}
             <form onSubmit={handleSubmit(addStudent)}>
               <TextField
                 margin="normal"
@@ -262,12 +254,11 @@ function StudentTable() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   {...register("Batch", { required: "This field is required" })}
-                  label="select students"
+                  label="select Batch"
                 >
-                  <MenuItem selected>Select Batch</MenuItem>
                   {batches ? (
                     batches.map((obj) => (
-                      <MenuItem value={obj.BatchName}>{obj.BatchName}</MenuItem>
+                      <MenuItem value={obj.BatchName} >{obj.BatchName}</MenuItem>
                     ))
                   ) : (
                     <span>No batches</span>

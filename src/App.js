@@ -16,6 +16,9 @@ import Students from "./Pages/Teacher/StudentManagement";
 import Domains from "./Pages/Teacher/DomainManagement";
 
 // Importing Student pages
+import StudentSignup from "./Pages/Student/Signup";
+import StudentsLogin from "./Pages/Student/Login";
+
 
 function App() {
   return (
@@ -30,11 +33,11 @@ function App() {
         {/* Teacher routes */}
         {/* Teacher Auth */}
         <Route path="/teacher/login" element={<TeacherLogin />}></Route>
-        <Route path="/teacher/:token" element={<TeacherSignup />}></Route>
+        <Route path="/teacher/:token" element={<TeacherSignup />} />
         {/* Dashboard */}
-        <Route path="/teacher" element={<TeacherHome />}></Route>
+        <Route path="/teacher" element={<TeacherHome />} />
         {/* Profile Management */}
-        <Route path="/teacher/profile/:id" element={<TeacherProfile />}></Route>
+        <Route path="/teacher/profile/:id" element={<TeacherProfile />} />
         <Route
           path="/teacher/editProfile/:id"
           element={<EditTeacherProfile />}
@@ -42,13 +45,16 @@ function App() {
         <Route
           path="/teacher/editProfile/:id"
           element={<EditTeacherProfile />}
-        ></Route>
+        />
 
         {/* Student management */}
         <Route path="/teacher/students" element={<Students />}></Route>
 
         {/* Domain management */}
         <Route path="/teacher/domains" element={<Domains />}></Route>
+        {/* Student routes */}
+        <Route path="/signup" element={<StudentSignup />}></Route>
+        <Route path="/login" element={<StudentsLogin />}></Route>
       </Routes>
     </div>
   );
