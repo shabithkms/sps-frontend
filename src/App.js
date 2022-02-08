@@ -19,6 +19,8 @@ import Domains from "./Pages/Teacher/DomainManagement";
 import StudentHome from "./Pages/Student/Home";
 import StudentSignup from "./Pages/Student/Signup";
 import StudentsLogin from "./Pages/Student/Login";
+import StudentProfile from "./Pages/Student/Profile";
+import StudentEditProfile from "./Pages/Student/EditTeacherProfile";
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
         <Route path="/" element={<StudentHome />}></Route>
         <Route path="/signup" element={<StudentSignup />}></Route>
         <Route path="/login" element={<StudentsLogin />}></Route>
+        <Route path="/profile" element={<StudentProfile />}></Route>
+        <Route path="/editProfile" element={<StudentEditProfile />}></Route>
       </Routes>
     </div>
   );

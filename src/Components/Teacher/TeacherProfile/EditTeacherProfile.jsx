@@ -5,6 +5,7 @@ import axios from "axios";
 import { TextField } from "@mui/material";
 import "react-image-crop/dist/ReactCrop.css";
 import "./TeacherProfile.css";
+import toast, { Toaster } from "react-hot-toast";
 
 function EditTeacherProfile() {
   let url = process.env.REACT_APP_URL;
@@ -55,6 +56,7 @@ function EditTeacherProfile() {
       try {
         axios.post(`${url}/teacher/editProfile`, formData).then((res) => {
           console.log(res.data.response);
+          toast.success(res.data.response);
           navigate(`/teacher/profile/${teacherData._id}`);
         });
       } catch (error) {
@@ -68,6 +70,14 @@ function EditTeacherProfile() {
   }, []);
   return (
     <div>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "black",
+            color: "white",
+          },
+        }}
+      />
       <div className="teacherProfile-mainDiv container">
         <div className="teacherProfile-div shadow  bg-light rounded col-md-6 ">
           <div className="text-center mb-5x">

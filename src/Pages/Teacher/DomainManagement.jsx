@@ -3,9 +3,9 @@ import SideBar from "../../Components/Teacher/TeacherHome/TeacherSideBar";
 import DomainTable from "../../Components/Teacher/DomainManagement/Domains";
 
 function DomainManagement() {
-  return ( 
+  return (
     <div className="d-flex">
-      <SideBar />
+      <SideBar domain={true} />
       <div className="p-3">
         <DomainTable />
       </div>
@@ -13,4 +13,4 @@ function DomainManagement() {
   );
 }
 
-export default DomainManagement; 
+export default DomainManagement;

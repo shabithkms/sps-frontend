@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import Header from "../../Components/Student/Header";
+import Header from "../../Components/Student/Header/Header";
 
 function Home() {
   const navigate = useNavigate();

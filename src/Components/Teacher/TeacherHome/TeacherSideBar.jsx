@@ -30,7 +30,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-function TeacherSideBar() {
+function TeacherSideBar(props) {
   const [teacherName, setTeacherName] = useState("");
   const [teacherId, setTeacherId] = useState("");
   const [profile, setProfile] = useState("");
@@ -43,7 +43,6 @@ function TeacherSideBar() {
 
   useEffect(() => {
     let teacher = JSON.parse(localStorage.getItem("teacher"));
-    console.log(teacher);
     if (teacher) {
       setTeacherName(teacher.name);
       setProfile(teacher.profile);
@@ -103,17 +102,19 @@ function TeacherSideBar() {
         <List className="mt-2">
           <ListItem
             button
+            className={props.dashboard && "bg-dark text-light"}
             key={"Dashboard"}
             onClick={() => {
               navigate("/teacher");
             }}
           >
             <ListItemIcon>
-              <HomeIcon />
+              <HomeIcon className={props.dashboard && "bg-dark text-light"}/>
             </ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
           <ListItem
+            className={props.student && "bg-dark text-light"}
             button
             key={"Students"}
             onClick={() => {
@@ -121,7 +122,7 @@ function TeacherSideBar() {
             }}
           >
             <ListItemIcon>
-              <PersonIcon />
+              <PersonIcon className={props.student && "bg-dark text-light"} />
             </ListItemIcon>
             <ListItemText primary={"Students"} />
           </ListItem>
@@ -163,13 +164,14 @@ function TeacherSideBar() {
           </ListItem>
           <ListItem
             button
+            className={props.domain && "bg-dark text-light"}
             key={"Domains"}
             onClick={() => {
               navigate("/teacher/domains");
             }}
           >
             <ListItemIcon>
-              <DnsIcon />
+              <DnsIcon className={props.domain && "bg-dark text-light"} />
             </ListItemIcon>
             <ListItemText primary={"Domains"} />
           </ListItem>

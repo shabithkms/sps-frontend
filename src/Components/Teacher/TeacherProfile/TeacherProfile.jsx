@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./TeacherProfile.css";
 import { useParams, useNavigate } from "react-router";
-import { Modal, Backdrop, Fade, Box } from "@mui/material";
+import { Modal, Backdrop, Fade, Box, Button } from "@mui/material";
 import axios from "axios";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
@@ -17,7 +17,6 @@ function TeacherProfile() {
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
   const [blob, setBlob] = useState(null);
-  const [buttonType, setButtonType] = useState(false);
   const [crop, setCrop] = useState({ aspect: 1 / 1 });
   const [teacherData, setTeacherData] = useState({});
   const style = {
@@ -47,17 +46,20 @@ function TeacherProfile() {
   };
   const getCroppedImage = async () => {
     let fileName = teacherData._id;
-    console.log("id", fileName);
-    let blob = await cropper.getCroppedImg(image, crop, fileName);
-    console.log("blob", blob);
-    setBlob(blob);
-    var reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = function () {
-      var base64data = reader.result;
-      setResult(base64data);
-    };
-    changePhoto();
+    if (crop.width !== 0) {
+      let blob = await cropper.getCroppedImg(image, crop, fileName);
+      console.log("blob", blob);
+      setBlob(blob);
+      var reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = function () {
+        var base64data = reader.result;
+        setResult(base64data);
+      };
+      changePhoto();
+    } else {
+      toast.error("Please select area to crop");
+    }
   };
 
   const changePhoto = () => {
@@ -70,8 +72,7 @@ function TeacherProfile() {
         .post(`${url}/teacher/editPhoto`, newData)
         .then((response) => {
           console.log(response.data);
-          toast(response.data.message);
-          setButtonType(false);
+          toast.success(response.data.message);
           setBlob(null);
           setFile(null);
           setImage(null);
@@ -80,7 +81,7 @@ function TeacherProfile() {
         })
         .catch((err) => {
           console.log(err);
-          toast(err.response.data.errors);
+          toast.error(err.response.data.errors);
         });
     } catch (error) {
       console.log(error);
@@ -104,7 +105,6 @@ function TeacherProfile() {
                 background: "black",
                 color: "white",
               },
-              icon: "✅",
             }}
           />
           <h2>Teacher Profile</h2>
@@ -126,25 +126,21 @@ function TeacherProfile() {
             </div>
           )}
           <div className="text-center mt-3">
-            {buttonType ? (
-              <input
-                className="form-group"
-                type="file"
-                name="image/*"
-                onChange={(e) => {
-                  handleFileChange(e);
-                }}
-              />
-            ) : (
-              <button
-                className="btn edit-btn"
-                onClick={() => {
-                  setButtonType(true);
-                }}
-              >
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="raised-button-file"
+              multiple
+              onChange={(e) => {
+                handleFileChange(e);
+              }}
+              type="file"
+            />
+            <label htmlFor="raised-button-file">
+              <Button variant="raised" component="span">
                 Change
-              </button>
-            )}
+              </Button>
+            </label>{" "}
           </div>
         </div>
         <div className="pt-4 profile-details">

@@ -5,9 +5,9 @@ import StudentTable from "../../Components/Teacher/StudentManagement/StudentTabl
 function StudentManagement() {
   return (
     <div className="d-flex">
-      <SideBar />
+      <SideBar student={true} />
       <div className="p-3">
-        <StudentTable/>
+        <StudentTable />
       </div>
     </div>
   );

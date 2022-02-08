@@ -21,7 +21,7 @@ function TeacherHome() {
 
   return (
     <div className="d-flex">
-      <SideBar />
+      <SideBar dashboard={true} />
       <div className="p-3">
         <Dashboard />
       </div>

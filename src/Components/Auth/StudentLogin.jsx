@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import "./StudentSignup.css";
-import { useNavigate } from "react-router";
 import { TextField } from "@mui/material";
 import axios from "axios";
-import { useParams } from "react-router";
-import { Alert } from "@mui/material";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
+import "./StudentSignup.css";
 
 function Signup() {
   const url = process.env.REACT_APP_URL;
@@ -25,10 +23,8 @@ function Signup() {
         .then((res) => {
           console.log(res.data.message);
           toast.success(res.data.message);
-          localStorage.setItem("Student", JSON.stringify(res.data.student));
-          setTimeout(() => {
-            navigate("/");
-          }, 1500);
+          localStorage.setItem("student", JSON.stringify(res.data.student));
+          navigate("/");
         })
         .catch((err) => {
           console.log(err.response.data.errors);
@@ -73,8 +69,7 @@ function Signup() {
               {...register("Email", {
                 required: "This field is required",
                 pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  value: /\S+@\S+\.\S+/,
                   message: "Invalid email address",
                 },
               })}
@@ -109,7 +104,15 @@ function Signup() {
             ) : (
               ""
             )}
-
+            <span>Not registered? </span>{" "}
+            <span
+              className="signup-link"
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Register now
+            </span>
             <div className="text-center">
               <button className="btn login-btn">
                 <span className="btn-text">Login</span>

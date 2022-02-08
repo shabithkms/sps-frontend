@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from "react";
-import "./StudentSignup.css";
-import { useNavigate } from "react-router";
 import { TextField } from "@mui/material";
 import axios from "axios";
-import { useParams } from "react-router";
-import { Alert } from "@mui/material";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
+import "./StudentSignup.css";
+
 
 function Signup() {
   const url = process.env.REACT_APP_URL;
-
-  const [error, setError] = useState("");
   const navigate = useNavigate();
-  let { token } = useParams();
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({ defaultValues: {} });
 
@@ -28,17 +23,17 @@ function Signup() {
     } else {
       try {
         axios
-          .post(`${url}/signup`, data)
+            .post(`${url}/signup`, data)
           .then((res) => {
             console.log(res.data.message);
-            toast.success(res.data.message)
+            toast.success(res.data.message);
             setTimeout(() => {
-              navigate('/login')
+              navigate("/login");
             }, 1500);
           })
           .catch((err) => {
             console.log(err.response.data.errors);
-            toast.error(err.response.data.errors)
+            toast.error(err.response.data.errors);
           });
       } catch (error) {
         console.log(error);
@@ -73,14 +68,6 @@ function Signup() {
         <div className="student-signup shadow  bg-light   ">
           <h1 className="text-center signup-header"> Register</h1>
 
-          {error ? (
-            <Alert className="" severity="error">
-              {error}
-            </Alert>
-          ) : (
-            ""
-          )}
-
           <form onSubmit={handleSubmit(doSignup)}>
             <TextField
               margin="normal"
@@ -111,8 +98,7 @@ function Signup() {
               {...register("Email", {
                 required: "This field is required",
                 pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  value: /\S+@\S+\.\S+/,
                   message: "Invalid email address",
                 },
               })}
@@ -169,6 +155,15 @@ function Signup() {
             ) : (
               ""
             )}
+            <span>Already registered? </span>{" "}
+            <span
+              className="signup-link"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login now
+            </span>
             <div className="text-center">
               <button className="btn login-btn">
                 <span className="btn-text">Register</span>

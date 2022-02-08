@@ -1,0 +1,18 @@
+.student-profile {
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 70px;
+  height: 70px;
+  background-image: url(../../../Assets/Images/profile.svg);
+}
+
+.logo-header {
+    cursor: pointer;
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.logo-dot {
+  font-size: 3rem;
+  color: #00d2b5;
+}

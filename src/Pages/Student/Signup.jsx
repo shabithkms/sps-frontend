@@ -8,9 +8,7 @@ function Signup() {
     let student = localStorage.getItem("student");
     if (student) {
       navigate("/");
-    } else {
-      navigate("/login");
-    }
+    } 
   }, []);
   return (
     <div>
