@@ -71,7 +71,7 @@ function Header() {
       >
         <Container>
           <Navbar.Brand>
-            <span className="logo-header">SPS </span>
+            <span className="logo-header">SPS</span>
             <span className="logo-dot">.</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

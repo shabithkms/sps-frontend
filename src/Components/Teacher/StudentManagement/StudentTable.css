@@ -1,3 +1,13 @@
 .addStudent-btn{
     justify-content: end;
 }
+.view-btn{
+    background-color: #00d2b5;
+    color: white;
+    margin-left: .5em;
+    width: 80px;
+}
+.view-btn:hover{
+    color: black;
+    background-color: aquamarine;   
+}

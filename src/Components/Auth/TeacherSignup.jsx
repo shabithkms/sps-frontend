@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { TextField } from "@mui/material";
-import axios from "axios";
-import { useParams } from "react-router";
-import { Alert } from "@mui/material";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { TextField } from '@mui/material';
+import axios from 'axios';
+import { useParams } from 'react-router';
+import { Alert } from '@mui/material';
 
 function TeacherSignup() {
   const url = process.env.REACT_APP_URL;
   const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
   let { token } = useParams();
@@ -28,7 +28,7 @@ function TeacherSignup() {
   const doTeacherSignup = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    console.log("err", formErrors);
+    console.log('err', formErrors);
     setIsSubmit(true);
   };
 
@@ -40,7 +40,7 @@ function TeacherSignup() {
       token,
     };
     if (formValues.confirmPassword !== formValues.password) {
-      return setError("password does not match");
+      return setError('password does not match');
     } else {
       try {
         axios
@@ -48,10 +48,10 @@ function TeacherSignup() {
           .then((response) => {
             console.log(response.data.teacherData);
             localStorage.setItem(
-              "teacher",
+              'teacher',
               JSON.stringify(response.data.teacherData)
             );
-            navigate("/teacher/login");
+            navigate('/teacher/login');
           })
           .catch((err) => {
             setError(err.response.data.errors);
@@ -66,27 +66,27 @@ function TeacherSignup() {
     const regex = /\S+@\S+\.\S+/;
     const result = regex.test(values.email);
     if (!values.name) {
-      errors.name = "Name is required";
+      errors.name = 'Name is required';
     } else if (values.name.length < 4) {
-      errors.name = "Name must contain atleast 4 letters";
+      errors.name = 'Name must contain atleast 4 letters';
     }
     if (!values.email) {
-      errors.email = "Email is required";
+      errors.email = 'Email is required';
     } else if (!result) {
-      errors.email = "Invalid email";
+      errors.email = 'Invalid email';
     }
     if (!values.password) {
-      errors.password = "Password is required";
+      errors.password = 'Password is required';
     } else if (values.password.length < 8 || values.password.length > 32) {
-      errors.password = "Password must be in 8-32 characters";
+      errors.password = 'Password must be in 8-32 characters';
     }
     if (!values.confirmPassword) {
-      errors.confirmPassword = "Confirm password is required";
+      errors.confirmPassword = 'Confirm password is required';
     } else if (
       values.confirmPassword.length < 8 ||
       values.confirmPassword.length > 32
     ) {
-      errors.confirmPassword = "Password must be in 8-32 characters";
+      errors.confirmPassword = 'Password must be in 8-32 characters';
     }
 
     return errors;
@@ -98,93 +98,93 @@ function TeacherSignup() {
   }, [formErrors]);
 
   return (
-    <div className="main-div container">
-      <div className="signup shadow  bg-light rounded col-md-6 ">
-        <h1 className="text-center">Teacher Signup</h1>
+    <div className='main-div container'>
+      <div className='signup shadow  bg-light rounded col-md-6 '>
+        <h1 className='text-center'>Teacher Signup</h1>
 
         {error ? (
-          <Alert className="" severity="error">
+          <Alert className='' severity='error'>
             {error}
           </Alert>
         ) : (
-          ""
+          ''
         )}
 
         <form onSubmit={doTeacherSignup}>
           <TextField
-            margin="normal"
+            margin='normal'
             fullWidth
-            name="name"
-            label="Fullname"
-            type="text"
+            name='name'
+            label='Fullname'
+            type='text'
             onChange={(e) => {
               handleChange(e);
-              setError("");
+              setError('');
             }}
             value={formValues.name}
-            id="name"
+            id='name'
           />
           {formErrors.name ? (
-            <span className=" errors">{formErrors.name}</span>
+            <span className=' errors'>{formErrors.name}</span>
           ) : (
-            ""
+            ''
           )}
           <TextField
-            margin="normal"
+            margin='normal'
             fullWidth
-            name="email"
-            label="Email"
+            name='email'
+            label='Email'
             // type="Email"
             onChange={(e) => {
               handleChange(e);
-              setError("");
+              setError('');
             }}
             value={formValues.email}
-            id="Email"
+            id='Email'
           />
           {formErrors.email ? (
-            <span className="errors">{formErrors.email}</span>
+            <span className='errors'>{formErrors.email}</span>
           ) : (
-            ""
+            ''
           )}
           <TextField
-            margin="normal"
+            margin='normal'
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
+            name='password'
+            label='Password'
+            type='password'
             onChange={(e) => {
               handleChange(e);
-              setError("");
+              setError('');
             }}
             value={formValues.password}
-            id="password"
+            id='password'
           />
           {formErrors.password ? (
-            <span className="errors ">{formErrors.password}</span>
+            <span className='errors '>{formErrors.password}</span>
           ) : (
-            ""
+            ''
           )}
           <TextField
-            margin="normal"
+            margin='normal'
             fullWidth
-            name="confirmPassword"
-            label="Confirm password"
-            type="password"
+            name='confirmPassword'
+            label='Confirm password'
+            type='password'
             onChange={(e) => {
               handleChange(e);
-              setError("");
+              setError('');
             }}
             value={formValues.confirmPassword}
-            id="c_password"
+            id='c_password'
           />
           {formErrors.confirmPassword ? (
-            <span className=" errors">{formErrors.confirmPassword}</span>
+            <span className=' errors'>{formErrors.confirmPassword}</span>
           ) : (
-            ""
+            ''
           )}
-          <div className="text-center">
-            <button className="btn login-btn">Register</button>
+          <div className='text-center'>
+            <button className='btn login-btn'>Register</button>
           </div>
         </form>
       </div>

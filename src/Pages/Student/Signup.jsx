@@ -1,14 +1,14 @@
-import React,{useEffect} from "react";
-import { useNavigate } from "react-router";
-import StudentSignup from "../../Components/Auth/StudentSignup";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import StudentSignup from '../../Components/Auth/StudentSignup';
 
 function Signup() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
-    let student = localStorage.getItem("student");
+    let student = localStorage.getItem('student');
     if (student) {
-      navigate("/");
-    } 
+      navigate('/');
+    }
   }, []);
   return (
     <div>

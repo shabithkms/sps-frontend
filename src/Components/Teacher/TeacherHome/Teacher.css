@@ -10,3 +10,6 @@
   height: 50px;
   background-image: url(../../../Assets/Images/profile.svg);
 }
+.sidebar-active{
+  background-color: rgb(233, 230, 230) !important;
+}

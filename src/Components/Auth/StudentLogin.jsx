@@ -1,12 +1,12 @@
-import { TextField } from "@mui/material";
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router";
-import "./StudentSignup.css";
+import { TextField } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+import './StudentSignup.css';
 
-function Signup() {
+function Login() {
   const url = process.env.REACT_APP_URL;
   const navigate = useNavigate();
 
@@ -23,8 +23,10 @@ function Signup() {
         .then((res) => {
           console.log(res.data.message);
           toast.success(res.data.message);
-          localStorage.setItem("student", JSON.stringify(res.data.student));
-          navigate("/");
+          localStorage.setItem('student', JSON.stringify(res.data.student));
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
         })
         .catch((err) => {
           console.log(err.response.data.errors);
@@ -38,84 +40,85 @@ function Signup() {
   useEffect(() => {}, []);
 
   return (
-    <div className="sign row flex-column flex-lg-row">
+    <div className='sign row  flex-lg-row'>
       <Toaster
         toastOptions={{
           style: {
-            background: "black",
-            color: "white",
+            background: 'black',
+            color: 'white',
           },
         }}
       />
-      <div className="left col-md-5">
-        <div className="container">
-          <div className="logo">
-            <h1 className="logo-signup">SPS.</h1>
+      <div className='left col-md-5'>
+        <div className='container'>
+          <div className='logo'>
+            <h1 className='logo-signup'>SPS.</h1>
           </div>
-          <div className="quote">
-            <h1 className="build">Build your Dream Career With Us.</h1>
+          <div className='quote'>
+            <h1 className='build'>Build your Dream Career With Us.</h1>
           </div>
         </div>
       </div>
 
-      <div className="right  col-md-7">
-        <div className="student-login shadow  bg-light   ">
-          <h1 className="text-center signup-header">Login</h1>
+      <div className='right  col-md-7'>
+        <div className='student-login shadow  bg-light '>
+          <h1 className='text-center signup-header'>Login</h1>
 
           <form onSubmit={handleSubmit(doLogin)}>
             <TextField
-              margin="normal"
+              margin='normal'
               fullWidth
-              {...register("Email", {
-                required: "This field is required",
+              {...register('Email', {
+                required: 'This field is required',
                 pattern: {
                   value: /\S+@\S+\.\S+/,
-                  message: "Invalid email address",
+                  message: 'Invalid email address',
                 },
               })}
-              label="Email"
-              id="Email"
+              label='Email'
+              id='Email'
             />
             {errors.Email ? (
-              <span className=" error">{errors.Email.message}</span>
+              <span className=' error'>{errors.Email.message}</span>
             ) : (
-              ""
+              ''
             )}
             <TextField
-              margin="normal"
+              margin='normal'
               fullWidth
-              {...register("Password", {
-                required: "This field is required",
+              {...register('Password', {
+                required: 'This field is required',
                 minLength: {
                   value: 8,
-                  message: "Minimum 8 characters required",
+                  message: 'Minimum 8 characters required',
                 },
                 maxLength: {
                   value: 20,
-                  message: "Maximum 20 characters allowed",
+                  message: 'Maximum 20 characters allowed',
                 },
               })}
-              label="Password"
-              type="password"
-              id="password"
+              label='Password'
+              type='password'
+              id='password'
             />
             {errors.Password ? (
-              <span className="error ">{errors.Password.message}</span>
+              <span className='error '>{errors.Password.message}</span>
             ) : (
-              ""
-            )}
-            <span>Not registered? </span>{" "}
+              ''
+            )}{' '}
+            <br />
+            <span className='redirect'>Not registered? </span>{' '}
             <span
-              className="signup-link"
+              className='signup-link'
               onClick={() => {
-                navigate("/signup");
+                navigate('/signup');
               }}
             >
               Register now
             </span>
-            <div className="text-center">
-              <button className="btn login-btn">
-                <span className="btn-text">Login</span>
+            <div className='text-center'>
+              <button className='btn login-btn-student'>
+                <span className='btn-text'>Login</span>
               </button>
             </div>
           </form>
@@ -124,4 +127,4 @@ function Signup() {
     </div>
   );
 }
-export default Signup;
+export default Login;

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./TeacherProfile.css";
-import { useParams, useNavigate } from "react-router";
-import { Modal, Backdrop, Fade, Box, Button } from "@mui/material";
-import axios from "axios";
-import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
-import cropper from "../../../utils/cropperImage";
-import toast, { Toaster } from "react-hot-toast";
+import React, { useEffect, useState } from 'react';
+import './TeacherProfile.css';
+import { useParams, useNavigate } from 'react-router';
+import { Modal, Backdrop, Fade, Box, Button } from '@mui/material';
+import axios from 'axios';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+import cropper from '../../../utils/cropperImage';
+import toast, { Toaster } from 'react-hot-toast';
 
 function TeacherProfile() {
   let navigate = useNavigate();
@@ -20,17 +20,17 @@ function TeacherProfile() {
   const [crop, setCrop] = useState({ aspect: 1 / 1 });
   const [teacherData, setTeacherData] = useState({});
   const style = {
-    position: "absolute",
-    top: "40%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '40%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 360,
     height: 450,
-    bgcolor: "background.paper",
+    bgcolor: 'background.paper',
     borderRadius: 2,
     boxShadow: 24,
     p: 4,
-    alignItems: "center",
+    alignItems: 'center',
   };
   const getTeacherData = () => {
     try {
@@ -48,7 +48,7 @@ function TeacherProfile() {
     let fileName = teacherData._id;
     if (crop.width !== 0) {
       let blob = await cropper.getCroppedImg(image, crop, fileName);
-      console.log("blob", blob);
+      console.log('blob', blob);
       setBlob(blob);
       var reader = new FileReader();
       reader.readAsDataURL(blob);
@@ -58,14 +58,14 @@ function TeacherProfile() {
       };
       changePhoto();
     } else {
-      toast.error("Please select area to crop");
+      toast.error('Please select area to crop');
     }
   };
 
   const changePhoto = () => {
     let newData = new FormData();
-    newData.append("image", blob);
-    newData.append("_id", teacherData._id);
+    newData.append('image', blob);
+    newData.append('_id', teacherData._id);
     console.log(newData);
     try {
       axios
@@ -96,14 +96,14 @@ function TeacherProfile() {
   }, [open]);
 
   return (
-    <div className="teacherProfile-mainDiv container">
-      <div className="teacherProfile-div shadow  bg-light rounded col-md-6 ">
-        <div className="text-center">
+    <div className='teacherProfile-mainDiv container'>
+      <div className='teacherProfile-div shadow  bg-light rounded col-md-6 '>
+        <div className='text-center'>
           <Toaster
             toastOptions={{
               style: {
-                background: "black",
-                color: "white",
+                background: 'black',
+                color: 'white',
               },
             }}
           />
@@ -112,46 +112,46 @@ function TeacherProfile() {
             <div>
               <img
                 src={teacherData.profile}
-                alt=""
+                alt=''
                 style={{ width: 150, height: 150, borderRadius: 500 }}
               />
             </div>
           ) : (
             <div>
               <img
-                className="editProfile"
-                alt=""
+                className='editProfile'
+                alt=''
                 style={{ width: 120, height: 120, borderRadius: 500 }}
               />
             </div>
           )}
-          <div className="text-center mt-3">
+          <div className='text-center mt-3'>
             <input
-              accept="image/*"
-              style={{ display: "none" }}
-              id="raised-button-file"
+              accept='image/*'
+              style={{ display: 'none' }}
+              id='raised-button-file'
               multiple
               onChange={(e) => {
                 handleFileChange(e);
               }}
-              type="file"
+              type='file'
             />
-            <label htmlFor="raised-button-file">
-              <Button variant="raised" component="span">
+            <label htmlFor='raised-button-file'>
+              <Button variant='raised' component='span'>
                 Change
               </Button>
-            </label>{" "}
+            </label>{' '}
           </div>
         </div>
-        <div className="pt-4 profile-details">
-          <h6>Full Name : {teacherData.name ? teacherData.name : ""}</h6>
-          <h6> Email : {teacherData.email ? teacherData.email : ""}</h6>
-          <h6> Mobile : {teacherData.mobile ? teacherData.mobile : ""}</h6>
-          <h6>Address : {teacherData.address ? teacherData.address : ""}</h6>
+        <div className='pt-4 profile-details'>
+          <h6>Full Name : {teacherData.name ? teacherData.name : ''}</h6>
+          <h6> Email : {teacherData.email ? teacherData.email : ''}</h6>
+          <h6> Mobile : {teacherData.mobile ? teacherData.mobile : ''}</h6>
+          <h6>Address : {teacherData.address ? teacherData.address : ''}</h6>
         </div>
         <div>
           <button
-            className="btn edit-btn"
+            className='btn edit-btn'
             onClick={() => {
               navigate(`/teacher/editProfile/${id}`);
             }}
@@ -161,8 +161,8 @@ function TeacherProfile() {
         </div>
       </div>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+        aria-labelledby='transition-modal-title'
+        aria-describedby='transition-modal-description'
         open={open}
         onClose={() => setOpen(false)}
         closeAfterTransition
@@ -172,7 +172,7 @@ function TeacherProfile() {
         }}
       >
         <Fade in={open}>
-          <Box sx={style} className="container text-center">
+          <Box sx={style} className='container text-center'>
             {file && (
               <div style={{ width: 300, height: 300 }}>
                 <ReactCrop
@@ -183,11 +183,11 @@ function TeacherProfile() {
                   style={{ width: 300, height: 300 }}
                 />
                 {result ? (
-                  <button className="btn login-btn" onClick={changePhoto}>
+                  <button className='btn login-btn' onClick={changePhoto}>
                     Save
                   </button>
                 ) : (
-                  <button className="btn login-btn" onClick={getCroppedImage}>
+                  <button className='btn login-btn' onClick={getCroppedImage}>
                     Crop image
                   </button>
                 )}

@@ -7,12 +7,13 @@
 }
 
 .logo-header {
-    cursor: pointer;
-  font-size: 3rem;
+  cursor: pointer;
+  font-size: 250%;
   font-weight: 600;
 }
 
 .logo-dot {
-  font-size: 3rem;
+  font-size: 280%;
   color: #00d2b5;
+  font-weight: 600;
 }

@@ -1,20 +1,19 @@
-import React from "react";
-let croppedBlob = {};
+
 let cropper = {
   getCroppedImg: async function (image, crop, fileName) {
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     canvas.width = crop.width;
     canvas.height = crop.height;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
 
     // New lines to be added
     const pixelRatio = window.devicePixelRatio;
     canvas.width = crop.width * pixelRatio;
     canvas.height = crop.height * pixelRatio;
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    ctx.imageSmoothingQuality = "high";
+    ctx.imageSmoothingQuality = 'high';
 
     ctx.drawImage(
       image,
@@ -33,13 +32,13 @@ let cropper = {
     // return base64Image;
 
     // As a blob
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       canvas.toBlob(
         (blob) => {
           blob.name = fileName;
           resolve(blob);
         },
-        "image/jpeg",
+        'image/jpeg',
         1
       );
     });

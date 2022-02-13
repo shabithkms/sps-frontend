@@ -2,8 +2,12 @@ import {
   Backdrop,
   Box,
   Fade,
+  FormControl,
+  InputLabel,
+  MenuItem,
   Modal,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -17,9 +21,10 @@ import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
-import toast, { Toaster } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import Validation from '../../../Constants/Validation';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,7 +52,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 600,
-  height: 320,
+  height: 'fullWidth',
   bgcolor: 'background.paper',
   borderRadius: 2,
   boxShadow: 24,
@@ -55,11 +60,11 @@ const style = {
   alignItems: 'center',
 };
 
-function Domains() {
+function ReviewerTable() {
   let url = process.env.REACT_APP_URL;
-  const [domains, setDomain] = useState([]);
+  const [reviewer, setReviewer] = useState([]);
+  const [domains, setDomains] = useState([]);
   const [open, setOpen] = useState(false);
-  const [swalShow, setSwalShow] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const {
@@ -69,13 +74,16 @@ function Domains() {
     formState: { errors },
   } = useForm({ defaultValues: {} });
 
-  const addNewDomain = (data) => {
+  //   Add  new Reviewer
+  const addNewReviewer = (data) => {
+    console.log(data);
     try {
       axios
-        .post(`${url}/teacher/addNewDomain`, data)
+        .post(`${url}/teacher/addNewReviewer`, data)
         .then((res) => {
           toast.success(res.data.message);
           setOpen(false);
+          reset();
         })
         .catch((err) => {
           toast.error(err.response.data.errors);
@@ -84,21 +92,10 @@ function Domains() {
       console.log(error);
     }
   };
-  const getDomains = () => {
-    try {
-      axios
-        .get(`${url}/teacher/getAllDomains`)
-        .then((res) => {
-          setDomain(res.data.domains);
-        })
-        .catch((err) => {
-          console.log(err.response.data.errors);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const deleteDomain = (id) => {
+
+  //   Delete Reviewer
+  const deleteReviewer = (id) => {
+    console.log(id);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -110,28 +107,45 @@ function Domains() {
     }).then((result) => {
       if (result.isConfirmed) {
         try {
-          axios
-            .post(`${url}/teacher/deleteDomain`, { id })
-            .then((res) => {
-              console.log(res.data);
-              setSwalShow(false);
-              Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-            })
-            .catch((err) => {
-              console.log(err.response.data.errors);
-            });
+          axios.delete(`${url}/teacher/deleteReviewer/${id}`).then((res) => {
+            console.log(res.data.message);
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            setTimeout(() => {
+              getAllReviewers();
+            }, 500);
+          });
         } catch (error) {
           console.log(error);
         }
       }
     });
   };
+
+  const getAllReviewers = () => {
+    try {
+      axios
+        .get(`${url}/teacher/getAllReviewer`)
+        .then((res) => {
+          setReviewer(res.data.reviewers);
+        })
+        .catch((err) => {});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAllDomain = () => {
+    axios.get(`${url}/teacher/getAllDomains`).then((res) => {
+      setDomains(res.data.domains);
+    });
+  };
+
   useEffect(() => {
-    reset();
-    getDomains();
-  }, [open, swalShow]);
+    getAllReviewers();
+    getAllDomain();
+  }, [open]);
   return (
     <div>
+      <h2 className='mb-4'>All Reviewers</h2>
       <Toaster
         toastOptions={{
           style: {
@@ -151,29 +165,26 @@ function Domains() {
             <TableRow>
               <StyledTableCell>No</StyledTableCell>
               <StyledTableCell align='center'>Name</StyledTableCell>
-              <StyledTableCell align='center'>No of students</StyledTableCell>
+              <StyledTableCell align='center'>Domain</StyledTableCell>
               <StyledTableCell align='center'>Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {domains
-              ? domains.map((obj, index) => (
+            {reviewer
+              ? reviewer.map((obj, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell component='th' scope='row'>
                       {index + 1}
                     </StyledTableCell>
+                    <StyledTableCell align='center'>{obj.Name}</StyledTableCell>
                     <StyledTableCell align='center'>
                       {obj.DomainName}
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>
-                      {obj.email}
                     </StyledTableCell>
                     <StyledTableCell align='center'>
                       <button
                         className='btn btn-danger'
                         onClick={() => {
-                          setSwalShow(true);
-                          deleteDomain(obj._id);
+                          deleteReviewer(obj._id);
                         }}
                       >
                         Delete
@@ -197,7 +208,7 @@ function Domains() {
         }}
       >
         <Fade in={open}>
-          <form onSubmit={handleSubmit(addNewDomain)}>
+          <form onSubmit={handleSubmit(addNewReviewer)}>
             <Box sx={style} className='container '>
               <Typography
                 id='transition-modal-title'
@@ -206,22 +217,67 @@ function Domains() {
                 component='h1'
                 fontWeight={'500'}
               >
-                Add new Domain
+                Add new Reviewer
               </Typography>
               <TextField
                 margin='normal'
                 fullWidth
-                {...register('DomainName', {
-                  required: 'This field is required',
+                {...register('Name', {
+                  required: Validation.Errors.REQUIRED_ERROR,
                   minLength: {
                     value: 5,
-                    message: 'Minimum 5 characters required',
+                    message: Validation.MinLength(5),
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: Validation.MaxLength(20),
                   },
                 })}
                 label='Name'
                 type='Text'
-                id='Name'
               />
+              {errors.Name && (
+                <span className='error'>{errors.Name.message}</span>
+              )}
+              <TextField
+                margin='normal'
+                fullWidth
+                {...register('Email', {
+                  required: Validation.Errors.REQUIRED_ERROR,
+                  pattern: {
+                    value: Validation.Patterns.EMAIL_PATTERN,
+                    message: Validation.Errors.INVALID_EMAIL,
+                  },
+                })}
+                label='Email'
+                type='Text'
+              />
+              {errors.Email && (
+                <span className='error'>{errors.Email.message}</span>
+              )}
+              <FormControl fullWidth className='mt-3'>
+                <InputLabel id='demo-simple-select-label'>
+                  Select Domain
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  {...register('DomainName', {
+                    required: Validation.Errors.REQUIRED_ERROR,
+                  })}
+                  label='select Batch'
+                >
+                  {domains ? (
+                    domains.map((obj) => (
+                      <MenuItem key={obj._id} value={obj.DomainName}>
+                        {obj.DomainName}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <span>No batches</span>
+                  )}
+                </Select>
+              </FormControl>
               {errors.DomainName && (
                 <span className='error'>{errors.DomainName.message}</span>
               )}
@@ -237,4 +293,4 @@ function Domains() {
   );
 }
 
-export default Domains;
+export default ReviewerTable;

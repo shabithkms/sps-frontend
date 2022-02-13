@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router";
-import StudentLogin from "../../Components/Auth/StudentLogin";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import StudentLogin from '../../Components/Auth/StudentLogin';
 
 function Login() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
-    let student = localStorage.getItem("student");
+    let student = localStorage.getItem('student');
     if (student) {
-      navigate("/");
+      navigate('/');
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   }, []);
 

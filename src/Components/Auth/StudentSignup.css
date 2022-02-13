@@ -2,47 +2,64 @@
   width: 100%;
   height: 100%;
 }
+.logo-signup {
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 300%;
+}
+.build {
+  font-size: 400%;
+  font-weight: 700;
+  margin-top: 30%;
+}
 .left {
   background-color: #00d2b5;
   height: 100vh;
   color: white;
 }
-.logo-signup {
-  font-weight: 600;
-  font-family: "Poppins", sans-serif;
-  font-size: 3rem;
-}
-.build {
-  font-size: 4rem;
-  font-weight: 700;
-  margin-top: 10rem;
-}
 .right {
   background-color: #f6f6f6;
   height: 100vh;
-  padding: 2rem 5rem;
+  padding: 5% 10%;
 }
 .student-signup {
   background-color: white;
   align-items: center;
   width: 100%;
-  padding: 2em 4em;
-  margin-top: 4em;
+  padding: 8% 10%;
+  margin-top: 5%;
   border-radius: 2%;
 }
 .student-login {
   background-color: white;
   align-items: center;
   width: 100%;
-  padding: 2em 4em;
-  margin-top: 6em;
+  padding: 8% 12%;
+  margin-top: 20%;
   border-radius: 2%;
 }
-
+.redirect{
+  font-size: 80%;
+}
+.signup-link{
+  color: #00d2b5;
+  cursor: pointer;
+  font-size: 80%;
+}
 .signup-header {
   font-weight: 700;
 }
 .btn-text {
-  font-size: 1.5rem;
+  font-size: 120%;
   font-weight: 500;
+}
+.login-btn-student {
+  background-color: #00d2b5;
+  color: white;
+  margin-top: 3%;
+  width: 40%;
+}
+
+.login-btn-student {
+  color: white;
 }
