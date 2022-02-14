@@ -6,54 +6,78 @@ import {
   TextField,
 } from '@mui/material';
 import axios from 'axios';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
 import Validation from '../../../Constants/Validation';
 import './Profile.css';
 
 function EditProfile() {
   const url = process.env.REACT_APP_URL;
   const [file, setFile] = useState(null);
-  const [details, setDetails] = useState(null);
   let student = JSON.parse(localStorage.getItem('student'));
-  let Id = student._id;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: {} });
-  const getStudentData = () => {
-    try {
-      axios.get(`${url}/getStudentData/${Id}`).then((res) => {
-        console.log(res.data.student);
-        setDetails(res.data.student);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  // Function for editing profile
   const editProfile = (data) => {
-    console.log(file);
+    console.log(data);
     try {
       data._id = student._id;
       let studentData = new FormData();
-      studentData.append('formData', data);
-      console.log(studentData.FormData);
-      axios.post(`${url}/editProfile`, studentData).then((res) => {
-        console.log(res.data.message);
-      });
+      console.log(data.Name);
+      studentData.append('Name', data.Name);
+      studentData.append('Domain', data.Domain);
+      studentData.append('DOB', data.DOB);
+      studentData.append('Age', data.Age);
+      studentData.append('Gender', data.Gender);
+      studentData.append('Email', student.Email);
+      studentData.append('Mobile', data.Mobile);
+      studentData.append('FatherName', data.FatherName);
+      studentData.append('FatherNo', data.FatherNo);
+      studentData.append('MotherName', data.MotherName);
+      studentData.append('MotherNo', data.MotherNo);
+      studentData.append('Guardian', data.Guardian);
+      studentData.append('Relationship', data.Relationship);
+      studentData.append('Address', data.Address);
+      studentData.append('Village', data.Village);
+      studentData.append('Taluk', data.Taluk);
+      studentData.append('Qualification', data.Qualification);
+      studentData.append('School', data.School);
+      studentData.append('Experience', data.Experience);
+      studentData.append('PaymentMethod', data.PaymentMethod);
+      studentData.append('ID_Proof', file);
+      console.log(file);
+      axios
+        .post(`${url}/editProfile`, studentData)
+        .then((res) => {
+          toast.success(res.data.message);
+          console.log(res.data.message);
+          console.log(res.data.student);
+          localStorage.removeItem('student');
+          localStorage.setItem('student', JSON.stringify(res.data.student));
+        })
+        .catch((err) => {
+          toast.error(err.response.data.errors);
+        });
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getStudentData();
-  }, []);
 
   return (
     <div className='container edit-profile-main'>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: 'black',
+            color: 'white',
+          },
+        }}
+      />
       <div className='shadow  form-container'>
         <form onSubmit={handleSubmit(editProfile)}>
           <table className='w-100'>
@@ -199,19 +223,9 @@ function EditProfile() {
                     fullWidth
                     disabled
                     defaultValue={student?.Email}
-                    {...register('Email', {
-                      required: Validation.Errors.REQUIRED_ERROR,
-                      pattern: {
-                        value: Validation.Patterns.EMAIL_PATTERN,
-                        message: Validation.Errors.INVALID_EMAIL,
-                      },
-                    })}
                     label='Email'
                     type='Text'
                   />
-                  {errors.Email && (
-                    <span className='error'>{errors.Email.message}</span>
-                  )}
                 </td>
               </tr>
               <tr>
@@ -457,16 +471,16 @@ function EditProfile() {
                   <TextField
                     margin='normal'
                     fullWidth
-                    defaultValue={student?.Qualifiacation}
+                    defaultValue={student?.Qualification}
                     {...register('Qualification', {
                       required: Validation.Errors.REQUIRED_ERROR,
                     })}
                     label='Qualification'
                     type='Text'
                   />
-                  {errors.Qualifiacation && (
+                  {errors.Qualification && (
                     <span className='error'>
-                      {errors.Qualifiacation.message}
+                      {errors.Qualification.message}
                     </span>
                   )}
                 </td>
