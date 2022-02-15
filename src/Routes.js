@@ -30,16 +30,16 @@ import TeacherSignup from './Pages/Teacher/TeacherSignup';
 
 function Routed() {
   const [admin, setAdmin] = useState(null);
-  const [teacher, setTeacher] = useState(null);
-  const [reviewer, setReviewer] = useState(null);
-  const [student, setStudent] = useState(null);
+  // const [teacher, setTeacher] = useState(null);
+  // const [reviewer, setReviewer] = useState(null);
+  // const [student, setStudent] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
     setAdmin(JSON.parse(localStorage.getItem('admin')));
-    setTeacher(JSON.parse(localStorage.getItem('teacher')));
-    setReviewer(JSON.parse(localStorage.getItem('reviewer')));
-    setStudent(JSON.parse(localStorage.getItem('student')));
+    // setTeacher(JSON.parse(localStorage.getItem('teacher')));
+    // setReviewer(JSON.parse(localStorage.getItem('reviewer')));
+    // setStudent(JSON.parse(localStorage.getItem('student')));
   }, [location]);
   return (
     <div>

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import './TeacherProfile.css';
-import { useParams, useNavigate } from 'react-router';
-import { Modal, Backdrop, Fade, Box, Button } from '@mui/material';
+import { Backdrop, Box, Button, Fade, Modal } from '@mui/material';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { useNavigate, useParams } from 'react-router';
 import cropper from '../../../utils/cropperImage';
-import toast, { Toaster } from 'react-hot-toast';
+import './TeacherProfile.css';
 
 function TeacherProfile() {
   let navigate = useNavigate();
@@ -108,10 +108,10 @@ function TeacherProfile() {
             }}
           />
           <h2>Teacher Profile</h2>
-          {teacherData.profile ? (
+          {teacherData.Profile ? (
             <div>
               <img
-                src={teacherData.profile}
+                src={teacherData.Profile}
                 alt=''
                 style={{ width: 150, height: 150, borderRadius: 500 }}
               />
@@ -144,10 +144,10 @@ function TeacherProfile() {
           </div>
         </div>
         <div className='pt-4 profile-details'>
-          <h6>Full Name : {teacherData.name ? teacherData.name : ''}</h6>
-          <h6> Email : {teacherData.email ? teacherData.email : ''}</h6>
-          <h6> Mobile : {teacherData.mobile ? teacherData.mobile : ''}</h6>
-          <h6>Address : {teacherData.address ? teacherData.address : ''}</h6>
+          <h6>Full Name : {teacherData.Name ? teacherData.Name : ''}</h6>
+          <h6> Email : {teacherData.Email ? teacherData.Email : ''}</h6>
+          <h6> Mobile : {teacherData.Mobile ? teacherData.Mobile : ''}</h6>
+          <h6>Address : {teacherData.Address ? teacherData.Address : ''}</h6>
         </div>
         <div>
           <button

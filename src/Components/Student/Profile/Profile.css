@@ -1,9 +1,9 @@
 .profile-div {
-  margin-top: 3rem;
-  height: 100vh;
+  margin-top: 5%;
+  /* height: 100vh; */
 }
 .left-div {
-  padding: 3rem 2rem;
+  padding: 3% 2%;
 }
 .edit-profile-main {
   padding: 0 8%;
@@ -12,4 +12,13 @@
   margin: 7% 0;
   padding: 3% 15%;
   background-color: white;
+}
+.formData{
+  white-space: nowrap;
+  overflow: hidden;
+  width: 10px;
+  height: 25px;
+}
+.image-section{
+  margin-top: 6%;
 }

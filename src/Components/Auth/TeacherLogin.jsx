@@ -1,117 +1,82 @@
 import TextField from '@mui/material/TextField';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import Alert from '@mui/material/Alert';
-import Collapse from '@mui/material/Collapse';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+import Validation from '../../Constants/Validation';
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [open, setOpen] = useState(false);
-  const [alert, setAlert] = useState('');
-
   const navigate = useNavigate();
 
-  const doTeacherLogin = () => {
-    let url = process.env.REACT_APP_URL;
+  // React hook form validation
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: {} });
 
-    let pattern = /\S+@\S+\.\S+/;
-    let result = pattern.test(email);
-    if (email === '' && password === '') {
-      setAlert('Both fields are required');
-    } else if (email === '') {
-      setAlert('Email is required');
-    } else if (password === '') {
-      setAlert('password is required');
-    } else if (!result) {
-      setAlert('Enter a valid email');
-    } else {
-      try {
-        let teacherData = {
-          email,
-          password,
-        };
-        axios
-          .post(`${url}/teacher/login`, teacherData)
-          .then((response) => {
-            console.log(response.data.teacher);
-            localStorage.setItem(
-              'teacher',
-              JSON.stringify(response.data.teacher)
-            );
-            navigate('/teacher');
-          })
-          .catch((err) => {
-            setAlert(err.response.data.errors);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+  const doTeacherLogin = (data) => {
+    let url = process.env.REACT_APP_URL;
+    try {
+      axios
+        .post(`${url}/teacher/login`, data)
+        .then((response) => {
+          console.log(response.data.teacher);
+          localStorage.setItem('teacher', JSON.stringify(response.data.teacher));
+          navigate('/teacher');
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          toast.error(err.response.data.errors  )
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return (
     <div className='main-div container'>
-      <div className='login shadow  bg-light rounded col-md-6 text-center'>
-        <h1>Teacher Login</h1>
-        <Collapse in={open}>
-          <Alert severity='error' sx={{ mb: 2 }}>
-            Invalid email or password
-          </Alert>
-        </Collapse>
-        {alert ? (
-          <Alert className='mb-3' severity='error'>
-            {alert}
-          </Alert>
-        ) : (
-          ''
-        )}
-        <TextField
-          margin='normal'
-          required
-          fullWidth
-          name='Email'
-          label='Email'
-          type='Email'
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setOpen(false);
-            setAlert('');
-          }}
-          value={email}
-          id='Email'
-        />
-
-        <TextField
-          margin='normal'
-          required
-          fullWidth
-          name='password'
-          label='Password'
-          type='password'
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setOpen(false);
-            setAlert('');
-          }}
-          value={password}
-          id='password'
-        />
-
-        <button
-          className='btn login-btn'
-          onClick={() => {
-            doTeacherLogin();
-          }}
-        >
-          Login
-        </button>
+      <div className='login shadow  bg-light rounded col-md-6 '>
+        <h1 className='text-center'>
+          <span className='shade'>Teacher</span> Login
+        </h1>
+        <form onSubmit={handleSubmit(doTeacherLogin)}>
+          <TextField
+            margin='normal'
+            fullWidth
+            name='Email'
+            {...register('Email', {
+              required: Validation.Errors.REQUIRED_ERROR,
+              pattern: {
+                value: Validation.Patterns.EMAIL_PATTERN,
+                message: Validation.Errors.INVALID_EMAIL,
+              },
+            })}
+            label='Email'
+          />
+          {errors.Email && <span className='error'>{errors.Email.message}</span>}
+          <TextField
+            margin='normal'
+            {...register('Password', {
+              required: Validation.Errors.REQUIRED_ERROR,
+              minLength: {
+                value: 8,
+                message: Validation.MinLength(8),
+              },
+              maxLength: {
+                value: 32,
+                message: Validation.MaxLength(32),
+              },
+            })}
+            fullWidth
+            label='Password'
+            type='password'
+          />
+          {errors.Password && <span className='error'>{errors.Password.message}</span>}
+          <div className='text-center'>
+            <button className='btn login-btn'>Login</button>
+          </div>
+        </form>
       </div>
     </div>
   );

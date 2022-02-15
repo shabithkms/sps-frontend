@@ -14,4 +14,12 @@ module.exports = {
     let error = `Only ${MaxLength} characters is allowed`;
     return error;
   },
+  Min: (minValue) => {
+    let error = `Minimum value is ${minValue}`;
+    return error;
+  },
+  Max: (maxValue) => {
+    let error = `Maximum value is ${maxValue}`;
+    return error;
+  },
 };

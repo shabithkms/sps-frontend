@@ -65,7 +65,7 @@ function Signup() {
 
       <div className='right  col-md-7'>
         <div className='student-signup shadow  bg-light   '>
-          <h1 className='text-center signup-header'> Register</h1>
+          <h1 className='text-center signup-header'> Register to <span className='shade'>SPS.</span> </h1>
 
           <form onSubmit={handleSubmit(doSignup)}>
             <TextField

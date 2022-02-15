@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router";
-import Login from "../../Components/Auth/TeacherLogin";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import Login from '../../Components/Auth/TeacherLogin';
 
 function TeacherLogin() {
   let navigate = useNavigate();
   useEffect(() => {
     try {
-      let teacher = JSON.parse(localStorage.getItem("teacher"));
+      let teacher = JSON.parse(localStorage.getItem('teacher'));
       if (teacher) {
-        navigate("/teacher");
+        navigate('/teacher');
       } else {
-        navigate("/teacher/login");
+        navigate('/teacher/login');
       }
     } catch (error) {
       console.log(error);
-      localStorage.removeItem("teacher");
+      localStorage.removeItem('teacher');
     }
   }, []);
 

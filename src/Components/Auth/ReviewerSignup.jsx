@@ -1,11 +1,10 @@
 import { TextField } from '@mui/material';
 import axios from 'axios';
-import { useEffect } from 'react';
+import jwtDecode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router';
 import Validation from '../../Constants/Validation';
-import jwtDecode from 'jwt-decode';
-import toast, { Toaster } from 'react-hot-toast';
 
 function ReviewerSignup() {
   const url = process.env.REACT_APP_URL;
@@ -13,13 +12,15 @@ function ReviewerSignup() {
   let { token } = useParams();
   let decoded = jwtDecode(token);
 
+  // React hook form configuration
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: {} });
 
-  const doTeacherSignup = (data) => {
+  // Reviewer registration
+  const doReviewerSignup = (data) => {
     try {
       if (data.Password === data.Confirm_Password) {
         if (decoded.Email === data.Email) {
@@ -44,22 +45,12 @@ function ReviewerSignup() {
       console.log(error);
     }
   };
-  useEffect(() => {}, []);
 
   return (
     <div className='main-div container'>
-      <Toaster
-        toastOptions={{
-          style: {
-            background: 'black',
-            color: 'white',
-          },
-        }}
-      />
       <div className='signup shadow  bg-light rounded col-md-6 '>
         <h1 className='text-center'>Register</h1>
-
-        <form onSubmit={handleSubmit(doTeacherSignup)}>
+        <form onSubmit={handleSubmit(doReviewerSignup)}>
           <TextField
             margin='normal'
             fullWidth
@@ -78,6 +69,7 @@ function ReviewerSignup() {
             type='text'
           />
           {errors.Name && <span className=' error'>{errors.Name.message}</span>}
+
           <TextField
             margin='normal'
             fullWidth
@@ -91,9 +83,8 @@ function ReviewerSignup() {
             label='Email'
             type='Email'
           />
-          {errors.Email && (
-            <span className=' error'>{errors.Email.message}</span>
-          )}
+          {errors.Email && <span className=' error'>{errors.Email.message}</span>}
+
           <TextField
             margin='normal'
             fullWidth
@@ -111,9 +102,8 @@ function ReviewerSignup() {
             label='Password'
             type='password'
           />
-          {errors.Password && (
-            <span className=' error'>{errors.Password.message}</span>
-          )}
+          {errors.Password && <span className=' error'>{errors.Password.message}</span>}
+
           <TextField
             margin='normal'
             fullWidth
@@ -131,9 +121,8 @@ function ReviewerSignup() {
             label='Confirm password'
             type='password'
           />
-          {errors.Confirm_Password && (
-            <span className=' error'>{errors.Confirm_Password.message}</span>
-          )}
+          {errors.Confirm_Password && <span className=' error'>{errors.Confirm_Password.message}</span>}
+
           <div className='text-center'>
             <button className='btn login-btn'>Register</button>
           </div>
@@ -142,4 +131,5 @@ function ReviewerSignup() {
     </div>
   );
 }
+
 export default ReviewerSignup;

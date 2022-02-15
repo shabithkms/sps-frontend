@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -108,18 +102,14 @@ function EditProfile() {
                     type='Text'
                     id='Name'
                   />
-                  {errors.Name && (
-                    <span className='error'>{errors.Name.message}</span>
-                  )}
+                  {errors.Name && <span className='error'>{errors.Name.message}</span>}
                 </td>
               </tr>
               <tr>
                 <th>Domain : </th>
                 <td>
                   <FormControl fullWidth className='mt-3'>
-                    <InputLabel id='demo-simple-select-label'>
-                      Select Domain
-                    </InputLabel>
+                    <InputLabel id='demo-simple-select-label'>Select Domain</InputLabel>
                     <Select
                       labelId='demo-simple-select-label'
                       id='demo-simple-select'
@@ -133,9 +123,7 @@ function EditProfile() {
                       <MenuItem value={'Mern stack'}>Mern Stack</MenuItem>
                       <MenuItem value={'Flutter'}>Flutter</MenuItem>
                     </Select>
-                    {errors.Domain && (
-                      <span className='error'>{errors.Domain.message}</span>
-                    )}
+                    {errors.Domain && <span className='error'>{errors.Domain.message}</span>}
                   </FormControl>
                 </td>
               </tr>
@@ -155,9 +143,7 @@ function EditProfile() {
                       })}
                       className='form-control mt-3'
                     />
-                    {errors.DOB && (
-                      <span className='error'>{errors.DOB.message}</span>
-                    )}
+                    {errors.DOB && <span className='error'>{errors.DOB.message}</span>}
                   </div>
                 </td>
               </tr>
@@ -181,18 +167,14 @@ function EditProfile() {
                     label='Age'
                     type='Number'
                   />
-                  {errors.Age && (
-                    <span className='error'>{errors.Age.message}</span>
-                  )}
+                  {errors.Age && <span className='error'>{errors.Age.message}</span>}
                 </td>
               </tr>
               <tr>
                 <th>Gender : </th>
                 <td>
                   <FormControl fullWidth className='mt-3'>
-                    <InputLabel id='demo-simple-select-label'>
-                      Select Gender
-                    </InputLabel>
+                    <InputLabel id='demo-simple-select-label'>Select Gender</InputLabel>
                     <Select
                       labelId='demo-simple-select-label'
                       id='demo-simple-select'
@@ -207,9 +189,7 @@ function EditProfile() {
                       <MenuItem value={'Female'}>Female</MenuItem>
                       <MenuItem value={'Other'}>Other</MenuItem>
                     </Select>
-                    {errors.Gender && (
-                      <span className='error'>{errors.Gender.message}</span>
-                    )}
+                    {errors.Gender && <span className='error'>{errors.Gender.message}</span>}
                   </FormControl>
                 </td>
               </tr>
@@ -251,9 +231,7 @@ function EditProfile() {
                     label='Mobile'
                     type='Number'
                   />
-                  {errors.Mobile && (
-                    <span className='error'>{errors.Mobile.message}</span>
-                  )}
+                  {errors.Mobile && <span className='error'>{errors.Mobile.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -272,9 +250,7 @@ function EditProfile() {
                       required: Validation.Errors.REQUIRED_ERROR,
                     })}
                   />
-                  {errors.FatherName && (
-                    <span className='error'>{errors.FatherName.message}</span>
-                  )}
+                  {errors.FatherName && <span className='error'>{errors.FatherName.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -301,9 +277,7 @@ function EditProfile() {
                     label="Father's No"
                     type='Number'
                   />
-                  {errors.FatherNo && (
-                    <span className='error'>{errors.FatherNo.message}</span>
-                  )}
+                  {errors.FatherNo && <span className='error'>{errors.FatherNo.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -323,9 +297,7 @@ function EditProfile() {
                     type='Text'
                     id='Name'
                   />
-                  {errors.MotherName && (
-                    <span className='error'>{errors.MotherName.message}</span>
-                  )}
+                  {errors.MotherName && <span className='error'>{errors.MotherName.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -352,9 +324,7 @@ function EditProfile() {
                     label="Mother's Number"
                     type='Number'
                   />
-                  {errors.MotherNo && (
-                    <span className='error'>{errors.MotherNo.message}</span>
-                  )}
+                  {errors.MotherNo && <span className='error'>{errors.MotherNo.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -373,9 +343,7 @@ function EditProfile() {
                     label='Guardian'
                     type='Text'
                   />
-                  {errors.Guardian && (
-                    <span className='error'>{errors.Guardian.message}</span>
-                  )}
+                  {errors.Guardian && <span className='error'>{errors.Guardian.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -394,9 +362,7 @@ function EditProfile() {
                     label='Relationship'
                     type='Text'
                   />
-                  {errors.Relationship && (
-                    <span className='error'>{errors.Relationship.message}</span>
-                  )}
+                  {errors.Relationship && <span className='error'>{errors.Relationship.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -415,9 +381,7 @@ function EditProfile() {
                     label='Address'
                     type='Text'
                   />
-                  {errors.Address && (
-                    <span className='error'>{errors.Address.message}</span>
-                  )}
+                  {errors.Address && <span className='error'>{errors.Address.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -436,9 +400,7 @@ function EditProfile() {
                     label='Village'
                     type='Text'
                   />
-                  {errors.Village && (
-                    <span className='error'>{errors.Village.message}</span>
-                  )}
+                  {errors.Village && <span className='error'>{errors.Village.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -457,9 +419,7 @@ function EditProfile() {
                     label='Taluk'
                     type='Text'
                   />
-                  {errors.Taluk && (
-                    <span className='error'>{errors.Taluk.message}</span>
-                  )}
+                  {errors.Taluk && <span className='error'>{errors.Taluk.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -478,11 +438,7 @@ function EditProfile() {
                     label='Qualification'
                     type='Text'
                   />
-                  {errors.Qualification && (
-                    <span className='error'>
-                      {errors.Qualification.message}
-                    </span>
-                  )}
+                  {errors.Qualification && <span className='error'>{errors.Qualification.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -501,9 +457,7 @@ function EditProfile() {
                     label='School/College'
                     type='Text'
                   />
-                  {errors.School && (
-                    <span className='error'>{errors.School.message}</span>
-                  )}
+                  {errors.School && <span className='error'>{errors.School.message}</span>}
                 </td>
               </tr>
               <tr>
@@ -522,18 +476,14 @@ function EditProfile() {
                     label='Work Experience'
                     type='Text'
                   />
-                  {errors.Experience && (
-                    <span className='error'>{errors.Experience.message}</span>
-                  )}
+                  {errors.Experience && <span className='error'>{errors.Experience.message}</span>}
                 </td>
               </tr>
               <tr>
                 <th>Payment Method : </th>
                 <td>
                   <FormControl fullWidth className='mt-3'>
-                    <InputLabel id='demo-simple-select-label'>
-                      Select Payment
-                    </InputLabel>
+                    <InputLabel id='demo-simple-select-label'>Select Payment</InputLabel>
                     <Select
                       labelId='demo-simple-select-label'
                       id='demo-simple-select'
@@ -547,11 +497,7 @@ function EditProfile() {
                       <MenuItem value={'ISA'}>ISA</MenuItem>
                       <MenuItem value={'Upfront'}>Upfront</MenuItem>
                     </Select>
-                    {errors.PaymentMethod && (
-                      <span className='error'>
-                        {errors.PaymentMethod.message}
-                      </span>
-                    )}
+                    {errors.PaymentMethod && <span className='error'>{errors.PaymentMethod.message}</span>}
                   </FormControl>
                 </td>
               </tr>
@@ -567,9 +513,7 @@ function EditProfile() {
                       console.log(e.target.files[0]);
                     }}
                   />
-                  {errors.ID_Card && (
-                    <span className='error'>{errors.ID_Card.message}</span>
-                  )}
+                  {errors.ID_Card && <span className='error'>{errors.ID_Card.message}</span>}
                 </td>
               </tr>
             </tbody>

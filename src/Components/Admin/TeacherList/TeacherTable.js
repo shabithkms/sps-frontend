@@ -161,12 +161,12 @@ export default function TeacherTable() {
                     <StyledTableCell component='th' scope='row'>
                       {index + 1}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{obj.name}</StyledTableCell>
+                    <StyledTableCell align='center'>{obj.Name}</StyledTableCell>
                     <StyledTableCell align='center'>
-                      {obj.email}
+                      {obj.Email}
                     </StyledTableCell>
                     <StyledTableCell align='center'>
-                      {obj.mobile}
+                      {obj.Mobile}
                     </StyledTableCell>
                     <StyledTableCell align='center'>
                       <button

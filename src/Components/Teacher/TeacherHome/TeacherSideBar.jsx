@@ -45,8 +45,8 @@ function TeacherSideBar(props) {
   useEffect(() => {
     let teacher = JSON.parse(localStorage.getItem('teacher'));
     if (teacher) {
-      setTeacherName(teacher.name);
-      setProfile(teacher.profile);
+      setTeacherName(teacher.Name);
+      setProfile(teacher.Profile);
       setTeacherId(teacher._id);
     }
   }, []);

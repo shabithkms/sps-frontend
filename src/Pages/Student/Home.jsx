@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
+import Footer from "../../Components/Student/Footer/Footer";
 import Header from "../../Components/Student/Header/Header";
 
 function Home() {
@@ -16,6 +17,7 @@ function Home() {
     <div>
       <Header />
       <h1>Homepage</h1>
+      {/* <Footer/> */}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import './StudentSignup.css';
 
@@ -41,14 +41,6 @@ function Login() {
 
   return (
     <div className='sign row  flex-lg-row'>
-      <Toaster
-        toastOptions={{
-          style: {
-            background: 'black',
-            color: 'white',
-          },
-        }}
-      />
       <div className='left col-md-5'>
         <div className='container'>
           <div className='logo'>
@@ -62,7 +54,7 @@ function Login() {
 
       <div className='right  col-md-7'>
         <div className='student-login shadow  bg-light '>
-          <h1 className='text-center signup-header'>Login</h1>
+          <h1 className='text-center signup-header'>Login to <span className='shade'>SPS.</span> </h1>
 
           <form onSubmit={handleSubmit(doLogin)}>
             <TextField

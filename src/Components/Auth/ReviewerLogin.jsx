@@ -1,24 +1,31 @@
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import Validation from '../../Constants/Validation';
 
 function Login() {
+  // Baser URL
   let url = process.env.REACT_APP_URL;
+
   const navigate = useNavigate();
+
+  // React hook form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: {} });
+
+  // Reviewer Login
   const doLogin = (data) => {
     try {
       axios
         .post(`${url}/reviewer/login`, data)
         .then((response) => {
           console.log(response.data.message);
-          localStorage.setItem(
-            'reviewer',
-            JSON.stringify(response.data.reviewer)
-          );
+          localStorage.setItem('reviewer', JSON.stringify(response.data.reviewer));
           navigate('/reviewer');
         })
         .catch((err) => {
@@ -30,29 +37,14 @@ function Login() {
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ defaultValues: {} });
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return (
     <div className='main-div container'>
-      <Toaster
-        toastOptions={{
-          style: {
-            background: 'black',
-            color: 'white',
-          },
-        }}
-      />
+
       <div className='login shadow  bg-light rounded col-md-6 '>
         <div className='text-center'>
           <h1>Reviewer Login</h1>
         </div>
+
         <form onSubmit={handleSubmit(doLogin)}>
           <TextField
             margin='normal'
@@ -67,9 +59,7 @@ function Login() {
             label='Email'
             type='Email'
           />
-          {errors.Email && (
-            <span className='error'>{errors.Email.message}</span>
-          )}
+          {errors.Email && <span className='error'>{errors.Email.message}</span>}
 
           <TextField
             margin='normal'
@@ -88,9 +78,8 @@ function Login() {
             label='Password'
             type='password'
           />
-          {errors.Password && (
-            <span className='error'>{errors.Password.message}</span>
-          )}
+          {errors.Password && <span className='error'>{errors.Password.message}</span>}
+
           <div className='text-center'>
             <button className='btn login-btn'>Login</button>
           </div>

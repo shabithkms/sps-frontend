@@ -33,7 +33,7 @@ function Login() {
             let Admin = {
               ADMIN,
             };
-            localStorage.setItem('Admin', JSON.stringify(Admin));
+            localStorage.setItem('admin', JSON.stringify(Admin));
             navigate('/admin');
           } else {
             setOpen(true);

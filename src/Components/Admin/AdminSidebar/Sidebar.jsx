@@ -30,7 +30,7 @@ export default function Sidebar(props) {
   const navigate = useNavigate();
 
   const doLogout = () => {
-    localStorage.removeItem('Admin');
+    localStorage.removeItem('admin');
     navigate('/admin/login');
   };
 

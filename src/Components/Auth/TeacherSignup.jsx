@@ -34,9 +34,9 @@ function TeacherSignup() {
 
   const validateTeacher = () => {
     let data = {
-      name: formValues.name,
-      email: formValues.email,
-      password: formValues.password,
+      Name: formValues.Name,
+      Email: formValues.Email,
+      Password: formValues.Password,
       token,
     };
     if (formValues.confirmPassword !== formValues.password) {
@@ -64,27 +64,27 @@ function TeacherSignup() {
   const validate = (values) => {
     const errors = {};
     const regex = /\S+@\S+\.\S+/;
-    const result = regex.test(values.email);
-    if (!values.name) {
+    const result = regex.test(values.Email);
+    if (!values.Name) {
       errors.name = 'Name is required';
-    } else if (values.name.length < 4) {
+    } else if (values.Name.length < 4) {
       errors.name = 'Name must contain atleast 4 letters';
     }
-    if (!values.email) {
+    if (!values.Email) {
       errors.email = 'Email is required';
     } else if (!result) {
       errors.email = 'Invalid email';
     }
-    if (!values.password) {
+    if (!values.Password) {
       errors.password = 'Password is required';
-    } else if (values.password.length < 8 || values.password.length > 32) {
+    } else if (values.Password.length < 8 || values.Password.length > 32) {
       errors.password = 'Password must be in 8-32 characters';
     }
-    if (!values.confirmPassword) {
+    if (!values.Confirm_Password) {
       errors.confirmPassword = 'Confirm password is required';
     } else if (
-      values.confirmPassword.length < 8 ||
-      values.confirmPassword.length > 32
+      values.Confirm_Password.length < 8 ||
+      values.Confirm_Password.length > 32
     ) {
       errors.confirmPassword = 'Password must be in 8-32 characters';
     }
@@ -114,14 +114,14 @@ function TeacherSignup() {
           <TextField
             margin='normal'
             fullWidth
-            name='name'
+            name='Name'
             label='Fullname'
             type='text'
             onChange={(e) => {
               handleChange(e);
               setError('');
             }}
-            value={formValues.name}
+            value={formValues.Name}
             id='name'
           />
           {formErrors.name ? (
@@ -132,14 +132,14 @@ function TeacherSignup() {
           <TextField
             margin='normal'
             fullWidth
-            name='email'
+            name='Email'
             label='Email'
             // type="Email"
             onChange={(e) => {
               handleChange(e);
               setError('');
             }}
-            value={formValues.email}
+            value={formValues.Email}
             id='Email'
           />
           {formErrors.email ? (
@@ -150,14 +150,14 @@ function TeacherSignup() {
           <TextField
             margin='normal'
             fullWidth
-            name='password'
+            name='Password'
             label='Password'
             type='password'
             onChange={(e) => {
               handleChange(e);
               setError('');
             }}
-            value={formValues.password}
+            value={formValues.Password}
             id='password'
           />
           {formErrors.password ? (
@@ -168,14 +168,14 @@ function TeacherSignup() {
           <TextField
             margin='normal'
             fullWidth
-            name='confirmPassword'
+            name='Confirm_Password'
             label='Confirm password'
             type='password'
             onChange={(e) => {
               handleChange(e);
               setError('');
             }}
-            value={formValues.confirmPassword}
+            value={formValues.Confirm_Password}
             id='c_password'
           />
           {formErrors.confirmPassword ? (
