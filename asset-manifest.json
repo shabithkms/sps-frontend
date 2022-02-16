@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/sps-frontend/static/css/main.09e6e885.css",
+    "main.js": "/sps-frontend/static/js/main.42034f1f.js",
+    "index.html": "/sps-frontend/index.html",
+    "static/media/profile.svg": "/sps-frontend/static/media/profile.7b5c67f622a6f501f4b9.svg",
+    "main.09e6e885.css.map": "/sps-frontend/static/css/main.09e6e885.css.map",
+    "main.42034f1f.js.map": "/sps-frontend/static/js/main.42034f1f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.09e6e885.css",
+    "static/js/main.42034f1f.js"
+  ]
+}
