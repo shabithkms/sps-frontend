@@ -39,7 +39,6 @@ function Login() {
 
   return (
     <div className='main-div container'>
-
       <div className='login shadow  bg-light rounded col-md-6 '>
         <div className='text-center'>
           <h1>Reviewer Login</h1>

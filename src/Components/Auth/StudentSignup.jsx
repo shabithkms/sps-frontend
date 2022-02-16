@@ -1,9 +1,9 @@
 import { TextField } from '@mui/material';
-import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import { StudentSignup } from '../../utils/Signup';
 import './StudentSignup.css';
 
 function Signup() {
@@ -17,41 +17,22 @@ function Signup() {
   } = useForm({ defaultValues: {} });
 
   const doSignup = (data) => {
-    if (data.Password !== data.Confirm_Password) {
-      toast.error('Passwords not same');
-    } else {
-      try {
-        axios
-          .post(`${url}/signup`, data)
-          .then((res) => {
-            console.log(res.data.message);
-            toast.success(res.data.message);
-            setTimeout(() => {
-              navigate('/login');
-            }, 1500);
-          })
-          .catch((err) => {
-            console.log(err.response.data.errors);
-            toast.error(err.response.data.errors);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    let endPoint = `${url}/signup`;
+    return new Promise(() => {
+      StudentSignup(data, endPoint)
+        .then((response) => {
+          console.log(response.data);
+          navigate('/login');
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.errors);
+        });
+    });
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div className='sign row  flex-lg-row'>
-      <Toaster
-        toastOptions={{
-          style: {
-            background: 'black',
-            color: 'white',
-          },
-        }}
-      />
       <div className='left col-md-5'>
         <div className='container'>
           <div className='logo'>
@@ -65,7 +46,10 @@ function Signup() {
 
       <div className='right  col-md-7'>
         <div className='student-signup shadow  bg-light   '>
-          <h1 className='text-center signup-header'> Register to <span className='shade'>SPS.</span> </h1>
+          <h1 className='text-center signup-header'>
+            {' '}
+            Register to <span className='shade'>SPS.</span>{' '}
+          </h1>
 
           <form onSubmit={handleSubmit(doSignup)}>
             <TextField
@@ -86,11 +70,7 @@ function Signup() {
               type='text'
               id='name'
             />
-            {errors.Name ? (
-              <span className=' error'>{errors.Name.message}</span>
-            ) : (
-              ''
-            )}
+            {errors.Name ? <span className=' error'>{errors.Name.message}</span> : ''}
             <TextField
               margin='normal'
               fullWidth
@@ -104,11 +84,7 @@ function Signup() {
               label='Email'
               id='Email'
             />
-            {errors.Email ? (
-              <span className=' error'>{errors.Email.message}</span>
-            ) : (
-              ''
-            )}
+            {errors.Email ? <span className=' error'>{errors.Email.message}</span> : ''}
             <TextField
               margin='normal'
               fullWidth
@@ -127,11 +103,7 @@ function Signup() {
               type='password'
               id='password'
             />
-            {errors.Password ? (
-              <span className='error '>{errors.Password.message}</span>
-            ) : (
-              ''
-            )}
+            {errors.Password ? <span className='error '>{errors.Password.message}</span> : ''}
             <TextField
               margin='normal'
               fullWidth
@@ -149,11 +121,7 @@ function Signup() {
               label='Confirm password'
               type='password'
             />
-            {errors.Confirm_Password ? (
-              <span className=' error'>{errors.Confirm_Password.message}</span>
-            ) : (
-              ''
-            )}
+            {errors.Confirm_Password ? <span className=' error'>{errors.Confirm_Password.message}</span> : ''}
             <br />
             <span className='redirect'>Already registered? </span>{' '}
             <span

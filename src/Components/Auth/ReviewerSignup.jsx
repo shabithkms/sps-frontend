@@ -1,16 +1,14 @@
 import { TextField } from '@mui/material';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router';
 import Validation from '../../Constants/Validation';
+import { Signup } from '../../utils/Signup';
 
 function ReviewerSignup() {
   const url = process.env.REACT_APP_URL;
   const navigate = useNavigate();
   let { token } = useParams();
-  let decoded = jwtDecode(token);
 
   // React hook form configuration
   const {
@@ -21,29 +19,16 @@ function ReviewerSignup() {
 
   // Reviewer registration
   const doReviewerSignup = (data) => {
-    try {
-      if (data.Password === data.Confirm_Password) {
-        if (decoded.Email === data.Email) {
-          axios
-            .post(`${url}/reviewer/signup`, data)
-            .then((response) => {
-              toast.success(response.data.message);
-              setTimeout(() => {
-                navigate('/reviewer/login');
-              }, 500);
-            })
-            .catch((err) => {
-              toast.error(err.response.data.errors);
-            });
-        } else {
-          toast.error('Not a registered Email');
-        }
-      } else {
-        toast.error('Password not same');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    let endPoint = `${url}/reviewer/signup`;
+    return new Promise(() => {
+      Signup(data, token, endPoint)
+        .then((response) => {
+          navigate('/reviewer');
+        })
+        .catch((err) => {
+          toast.error(err.errors);
+        });
+    });
   };
 
   return (
