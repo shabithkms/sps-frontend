@@ -1,0 +1,457 @@
+body,
+html {
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #f6f6f6;
+}
+.error {
+  color: red;
+  font-size: 15px;
+}
+.toastBar {
+  background: #000;
+  color: #fff;
+}
+.main-div {
+  display: flex;
+  justify-content: center;
+}
+.login {
+  height: 31em;
+  padding: 5em;
+}
+.login,
+.signup {
+  align-items: center;
+  background-color: #fff;
+  margin-top: 5em;
+  width: 40em;
+}
+.signup {
+  height: 36em;
+  padding: 2em 4em;
+}
+.login-btn {
+  background-color: #00d2b5;
+  color: #fff;
+  margin-top: 1em;
+  width: 8em;
+}
+.login-btn:hover {
+  color: #fff;
+}
+.errors {
+  color: red;
+  font-size: 13px;
+  justify-content: start;
+}
+.shade {
+  color: #00d2b5;
+}
+.add-btn {
+  background-color: #00d2b5;
+  color: #fff;
+}
+.student-profile {
+  background-image: url(/static/media/profile.7b5c67f622a6f501f4b9.svg);
+  border: 1px solid #000;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+}
+.logo-header {
+  cursor: pointer;
+  font-size: 250%;
+  font-weight: 600;
+}
+.logo-dot {
+  color: #00d2b5;
+  font-size: 280%;
+  font-weight: 600;
+}
+.profile-div {
+  margin-top: 5%;
+}
+.left-div {
+  padding: 3% 2%;
+}
+.edit-profile-main {
+  padding: 0 8%;
+}
+.form-container {
+  background-color: #fff;
+  margin: 7% 0;
+  padding: 3% 15%;
+}
+.formData {
+  height: 25px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 10px;
+}
+.image-section {
+  margin-top: 6%;
+}
+.sign {
+  height: 100%;
+  width: 100%;
+}
+.logo-signup {
+  font-family: Poppins, sans-serif;
+  font-size: 300%;
+  font-weight: 600;
+}
+.build {
+  font-size: 300%;
+  font-weight: 700;
+  margin-top: 30%;
+}
+.left {
+  background-color: #00d2b5;
+  color: #fff;
+  height: 100vh;
+}
+.right {
+  background-color: #f6f6f6;
+  height: 100vh;
+  padding: 5% 10%;
+}
+.student-signup {
+  margin-top: 5%;
+  padding: 8% 10%;
+}
+.student-login,
+.student-signup {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 2%;
+  width: 100%;
+}
+.student-login {
+  margin-top: 20%;
+  padding: 8% 12%;
+}
+.redirect,
+.signup-link {
+  font-size: 80%;
+}
+.signup-link {
+  color: #00d2b5;
+  cursor: pointer;
+}
+.signup-header {
+  font-weight: 700;
+}
+.btn-text {
+  font-size: 120%;
+  font-weight: 500;
+}
+.login-btn-student {
+  background-color: #00d2b5;
+  color: #fff;
+  margin-top: 3%;
+  width: 40%;
+}
+.teacherProfileMain {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+.teacherProfile {
+  background-image: url(/static/media/profile.7b5c67f622a6f501f4b9.svg);
+  border: 1px solid #000;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+.sidebar-active {
+  background-color: #e9e6e6 !important;
+}
+.ReactCrop {
+  cursor: crosshair;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.ReactCrop:focus {
+  outline: none;
+}
+.ReactCrop--disabled,
+.ReactCrop--locked {
+  cursor: inherit;
+}
+.ReactCrop__image {
+  display: block;
+  max-width: 100%;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+.ReactCrop__crop-selection {
+  border: 1px dashed #fff;
+  -webkit-box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: move;
+  left: 0;
+  position: absolute;
+  top: 0;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.ReactCrop--disabled .ReactCrop__crop-selection {
+  cursor: inherit;
+}
+.ReactCrop--circular-crop .ReactCrop__crop-selection {
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 1px 1px #fff, 0 0 0 9999em rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px 1px #fff, 0 0 0 9999em rgba(0, 0, 0, 0.5);
+}
+.ReactCrop--invisible-crop .ReactCrop__crop-selection {
+  display: none;
+}
+.ReactCrop__rule-of-thirds-hz:after,
+.ReactCrop__rule-of-thirds-hz:before,
+.ReactCrop__rule-of-thirds-vt:after,
+.ReactCrop__rule-of-thirds-vt:before {
+  background-color: hsla(0, 0%, 100%, 0.4);
+  content: '';
+  display: block;
+  position: absolute;
+}
+.ReactCrop__rule-of-thirds-vt:after,
+.ReactCrop__rule-of-thirds-vt:before {
+  height: 100%;
+  width: 1px;
+}
+.ReactCrop__rule-of-thirds-vt:before {
+  left: 33.3333%;
+  left: 33.3333333333%;
+}
+.ReactCrop__rule-of-thirds-vt:after {
+  left: 66.6666%;
+  left: 66.6666666667%;
+}
+.ReactCrop__rule-of-thirds-hz:after,
+.ReactCrop__rule-of-thirds-hz:before {
+  height: 1px;
+  width: 100%;
+}
+.ReactCrop__rule-of-thirds-hz:before {
+  top: 33.3333%;
+  top: 33.3333333333%;
+}
+.ReactCrop__rule-of-thirds-hz:after {
+  top: 66.6666%;
+  top: 66.6666666667%;
+}
+.ReactCrop__drag-handle {
+  position: absolute;
+}
+.ReactCrop__drag-handle:after {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid hsla(0, 0%, 100%, 0.7);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  content: '';
+  display: block;
+  height: 10px;
+  outline: 1px solid transparent;
+  position: absolute;
+  width: 10px;
+}
+.ReactCrop .ord-nw {
+  cursor: nw-resize;
+  left: 0;
+  margin-left: -5px;
+  margin-top: -5px;
+  top: 0;
+}
+.ReactCrop .ord-nw:after {
+  left: 0;
+  top: 0;
+}
+.ReactCrop .ord-n {
+  cursor: n-resize;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+  top: 0;
+}
+.ReactCrop .ord-n:after {
+  top: 0;
+}
+.ReactCrop .ord-ne {
+  cursor: ne-resize;
+  margin-right: -5px;
+  margin-top: -5px;
+  right: 0;
+  top: 0;
+}
+.ReactCrop .ord-ne:after {
+  right: 0;
+  top: 0;
+}
+.ReactCrop .ord-e {
+  cursor: e-resize;
+  margin-right: -5px;
+  margin-top: -5px;
+  right: 0;
+  top: 50%;
+}
+.ReactCrop .ord-e:after {
+  right: 0;
+}
+.ReactCrop .ord-se {
+  bottom: 0;
+  cursor: se-resize;
+  margin-bottom: -5px;
+  margin-right: -5px;
+  right: 0;
+}
+.ReactCrop .ord-se:after {
+  bottom: 0;
+  right: 0;
+}
+.ReactCrop .ord-s {
+  bottom: 0;
+  cursor: s-resize;
+  left: 50%;
+  margin-bottom: -5px;
+  margin-left: -5px;
+}
+.ReactCrop .ord-s:after {
+  bottom: 0;
+}
+.ReactCrop .ord-sw {
+  bottom: 0;
+  cursor: sw-resize;
+  left: 0;
+  margin-bottom: -5px;
+  margin-left: -5px;
+}
+.ReactCrop .ord-sw:after {
+  bottom: 0;
+  left: 0;
+}
+.ReactCrop .ord-w {
+  cursor: w-resize;
+  left: 0;
+  margin-left: -5px;
+  margin-top: -5px;
+  top: 50%;
+}
+.ReactCrop .ord-w:after {
+  left: 0;
+}
+.ReactCrop__disabled .ReactCrop__drag-handle {
+  cursor: inherit;
+}
+.ReactCrop__drag-bar {
+  position: absolute;
+}
+.ReactCrop__drag-bar.ord-n {
+  height: 6px;
+  left: 0;
+  margin-top: -3px;
+  top: 0;
+  width: 100%;
+}
+.ReactCrop__drag-bar.ord-e {
+  height: 100%;
+  margin-right: -3px;
+  right: 0;
+  top: 0;
+  width: 6px;
+}
+.ReactCrop__drag-bar.ord-s {
+  bottom: 0;
+  height: 6px;
+  left: 0;
+  margin-bottom: -3px;
+  width: 100%;
+}
+.ReactCrop__drag-bar.ord-w {
+  height: 100%;
+  left: 0;
+  margin-left: -3px;
+  top: 0;
+  width: 6px;
+}
+.ReactCrop--fixed-aspect .ReactCrop__drag-bar,
+.ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-e,
+.ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-n,
+.ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-s,
+.ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-w,
+.ReactCrop--new-crop .ReactCrop__drag-bar,
+.ReactCrop--new-crop .ReactCrop__drag-handle {
+  display: none;
+}
+@media (pointer: coarse) {
+  .ReactCrop .ord-e,
+  .ReactCrop .ord-n,
+  .ReactCrop .ord-s,
+  .ReactCrop .ord-w {
+    display: none;
+  }
+  .ReactCrop__drag-handle {
+    height: 24px;
+    width: 24px;
+  }
+}
+.teacherProfile-mainDiv {
+  display: flex;
+  justify-content: center;
+}
+.teacherProfile-div {
+  align-items: center;
+  background-color: #fff;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-top: 3em;
+  padding: 2em 4em;
+  width: 40em;
+}
+.edit-btn {
+  background-color: #00d2b5;
+  color: #fff;
+  margin-top: 1em;
+  width: 8em;
+}
+.editProfileMain {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+.editProfile {
+  background-image: url(/static/media/profile.7b5c67f622a6f501f4b9.svg);
+  border: 1px solid #000;
+  border-radius: 50%;
+}
+.cropped-image,
+.editProfile {
+  height: 100px;
+  width: 100px;
+}
+.addStudent-btn {
+  justify-content: end;
+}
+.view-btn {
+  background-color: #00d2b5;
+  color: #fff;
+  margin-left: 0.5em;
+  width: 80px;
+}
+.view-btn:hover {
+  background-color: #7fffd4;
+  color: #000;
+}
+/*# sourceMappingURL=main.76f00e04.css.map*/
