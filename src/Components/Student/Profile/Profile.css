@@ -1,8 +1,11 @@
 .profile-div {
   margin-top: 5%;
-  /* height: 100vh; */
+  margin-bottom: 5%;  
 }
 .left-div {
+  padding: 3% 2%;
+}
+.down-div{
   padding: 3% 2%;
 }
 .edit-profile-main {
@@ -21,4 +24,15 @@
 }
 .image-section{
   margin-top: 6%;
+}
+.id-proof{
+  width: 40%;
+  height: 60%;
+  border-radius: 2%;
+}
+.edit-profile-btn{
+  background-color: #00d2b5;
+  margin: 3% 2%;
+  color: white;
+  width: 15%;
 }
