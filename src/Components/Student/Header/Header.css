@@ -1,6 +1,7 @@
 .student-profile {
   border-radius: 50%;
   border: 1px solid black;
+  cursor: pointer;
   width: 70px;
   height: 70px;
   background-image: url(../../../Assets/Images/profile.svg);
