@@ -160,7 +160,7 @@ function Profile() {
           </div>
           <div className='col-md-6 image-section text-center'>
             <div className=''>
-              {student ? (
+              {student.Profile ? (
                 <div>
                   <img src={student?.Profile} alt='' style={{ width: 150, height: 150, borderRadius: 500 }} />
                 </div>
@@ -220,13 +220,6 @@ function Profile() {
                         )}
                       </div>
                     )}
-                    {/* <div className="mb-4">
-              <img
-                src={teacherData.profile}
-                alt=""
-                style={{ width: 150, height: 150}}
-              />
-            </div> */}
                   </Box>
                 </Fade>
               </Modal>
@@ -340,7 +333,11 @@ function Profile() {
                     <span className='formData'>Govt ID : </span>
                   </th>
                   <td>
-                    <img src={student?.ID_Proof} className='id-proof' alt='Govt Id' />
+                    {student.ID_Proof ? (
+                      <img src={student?.ID_Proof} className='id-proof' alt='Govt Id' />
+                    ) : (
+                      <span className='formDta'>None</span>
+                    )}
                   </td>
                 </tr>
               </tbody>
