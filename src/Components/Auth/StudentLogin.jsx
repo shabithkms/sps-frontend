@@ -24,9 +24,7 @@ function Login() {
           console.log(res.data.message);
           toast.success(res.data.message);
           localStorage.setItem('student', JSON.stringify(res.data.student));
-          setTimeout(() => {
-            navigate('/');
-          }, 1000);
+          navigate('/');
         })
         .catch((err) => {
           console.log(err.response.data.errors);
@@ -41,7 +39,7 @@ function Login() {
 
   return (
     <div className='sign row  flex-lg-row'>
-      <div className='left col-md-5'>
+      <div className='left col-md-5 d-none d-md-block'>
         <div className='container'>
           <div className='logo'>
             <h1 className='logo-signup'>SPS.</h1>
@@ -54,7 +52,9 @@ function Login() {
 
       <div className='right  col-md-7'>
         <div className='student-login shadow  bg-light '>
-          <h1 className='text-center signup-header'>Login to <span className='shade'>SPS.</span> </h1>
+          <h1 className='text-center signup-header'>
+            Login to <span className='shade'>SPS.</span>{' '}
+          </h1>
 
           <form onSubmit={handleSubmit(doLogin)}>
             <TextField
@@ -70,11 +70,7 @@ function Login() {
               label='Email'
               id='Email'
             />
-            {errors.Email ? (
-              <span className=' error'>{errors.Email.message}</span>
-            ) : (
-              ''
-            )}
+            {errors.Email ? <span className=' error'>{errors.Email.message}</span> : ''}
             <TextField
               margin='normal'
               fullWidth
@@ -93,12 +89,7 @@ function Login() {
               type='password'
               id='password'
             />
-            {errors.Password ? (
-              <span className='error '>{errors.Password.message}</span>
-            ) : (
-              ''
-            )}{' '}
-            <br />
+            {errors.Password ? <span className='error '>{errors.Password.message}</span> : ''} <br />
             <span className='redirect'>Not registered? </span>{' '}
             <span
               className='signup-link'

@@ -33,7 +33,7 @@ function Signup() {
 
   return (
     <div className='sign row  flex-lg-row'>
-      <div className='left col-md-5'>
+      <div className='left col-md-5 d-none d-md-block'>
         <div className='container'>
           <div className='logo'>
             <h1 className='logo-signup'>SPS.</h1>
