@@ -1,7 +1,7 @@
 import { Backdrop, Box, Button, Fade, Modal } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { useNavigate, useParams } from 'react-router';
@@ -48,7 +48,6 @@ function TeacherProfile() {
     let fileName = teacherData._id;
     if (crop.width !== 0) {
       let blob = await cropper.getCroppedImg(image, crop, fileName);
-      console.log('blob', blob);
       setBlob(blob);
       var reader = new FileReader();
       reader.readAsDataURL(blob);
@@ -99,30 +98,14 @@ function TeacherProfile() {
     <div className='teacherProfile-mainDiv container'>
       <div className='teacherProfile-div shadow  bg-light rounded col-md-6 '>
         <div className='text-center'>
-          <Toaster
-            toastOptions={{
-              style: {
-                background: 'black',
-                color: 'white',
-              },
-            }}
-          />
           <h2>Teacher Profile</h2>
           {teacherData.Profile ? (
             <div>
-              <img
-                src={teacherData.Profile}
-                alt=''
-                style={{ width: 150, height: 150, borderRadius: 500 }}
-              />
+              <img src={teacherData.Profile} alt='' style={{ width: 150, height: 150, borderRadius: 500 }} />
             </div>
           ) : (
             <div>
-              <img
-                className='editProfile'
-                alt=''
-                style={{ width: 120, height: 120, borderRadius: 500 }}
-              />
+              <img className='editProfile' alt='' style={{ width: 120, height: 120, borderRadius: 500 }} />
             </div>
           )}
           <div className='text-center mt-3'>
@@ -193,13 +176,6 @@ function TeacherProfile() {
                 )}
               </div>
             )}
-            {/* <div className="mb-4">
-              <img
-                src={teacherData.profile}
-                alt=""
-                style={{ width: 150, height: 150}}
-              />
-            </div> */}
           </Box>
         </Fade>
       </Modal>
