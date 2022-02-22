@@ -63,9 +63,9 @@ function Header() {
   );
   return (
     <div>
-      <Navbar collapseOnSelect expand='lg' bg='light' className='text-dark shadow'>
+      <Navbar collapseOnSelect expand='lg' bg='light' className='text-dark shadow-sm '>
         <Container>
-          <Navbar.Brand>
+          <Navbar.Brand onClick={()=>navigate('/')}>
             <span className='logo-header'>SPS</span>
             <span className='logo-dot'>.</span>
           </Navbar.Brand>
@@ -86,11 +86,9 @@ function Header() {
                   Logout
                 </p>
               </Nav.Link>
-              {/* <Nav.Link> */}
-                <div onClick={handleProfileMenuOpen} className='pb-2 d-none d-lg-block '>
-                  <img style={{ width: 50, height: 50 }} alt='' className='student-profile' />
-                </div>
-              {/* </Nav.Link> */}
+              <div onClick={handleProfileMenuOpen} className='pb-2 d-none d-lg-block '>
+                <img style={{ width: 50, height: 50 }} alt='' className='student-profile' />
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
