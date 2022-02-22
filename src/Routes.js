@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
@@ -27,8 +28,11 @@ import TeacherHome from './Pages/Teacher/TeacherHome';
 import TeacherLogin from './Pages/Teacher/TeacherLogin';
 import TeacherProfile from './Pages/Teacher/TeacherProfile';
 import TeacherSignup from './Pages/Teacher/TeacherSignup';
+import { update_student } from './Redux/studentSlice';
 
 function Routed() {
+  const dispatch = useDispatch();
+
   const [admin, setAdmin] = useState(null);
   // const [teacher, setTeacher] = useState(null);
   // const [reviewer, setReviewer] = useState(null);
@@ -40,14 +44,17 @@ function Routed() {
     // setTeacher(JSON.parse(localStorage.getItem('teacher')));
     // setReviewer(JSON.parse(localStorage.getItem('reviewer')));
     // setStudent(JSON.parse(localStorage.getItem('student')));
+    let student = JSON.parse(localStorage.getItem('student'));
+    dispatch(update_student(student));
   }, [location]);
+
   return (
     <div>
       <Routes>
         {/* Admin Routes */}
         <Route path='/admin' element={admin ? <AdminHome /> : <Navigate to='/admin/login' />}></Route>
         <Route path='/admin/teachers' element={admin ? <TeacherList /> : <Navigate to='/admin/login' />}></Route>
-        <Route path='/admin/batches' element={admin?<Batches /> : <Navigate to='/admin/login'/>}></Route>
+        <Route path='/admin/batches' element={admin ? <Batches /> : <Navigate to='/admin/login' />}></Route>
         <Route path='/admin/login' element={admin ? <Navigate to='/admin' /> : <AdminLogin />}></Route>
 
         {/* Teacher routes */}
