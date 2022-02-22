@@ -3,12 +3,15 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { update_student } from '../../Redux/studentSlice';
 import './StudentSignup.css';
 
 function Login() {
   const url = process.env.REACT_APP_URL;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -24,6 +27,8 @@ function Login() {
           console.log(res.data.message);
           toast.success(res.data.message);
           localStorage.setItem('student', JSON.stringify(res.data.student));
+          let student = JSON.parse(localStorage.getItem('student'));
+          dispatch(update_student(student));
           navigate('/');
         })
         .catch((err) => {
