@@ -1,11 +1,12 @@
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import Routed from './Routes';
-import { Toaster } from 'react-hot-toast';
+import Routes from './Routes';
 
 function App() {
   return (
     <div className='App'>
+      {/* React hot toast */}
       <Toaster
         position='top-center'
         reverseOrder={false}
@@ -30,8 +31,9 @@ function App() {
           },
         }}
       />
+
       <Router>
-        <Routed />
+        <Routes />
       </Router>
     </div>
   );
