@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "../../Components/Student/Header/Header";
-import StudentProfile from "../../Components/Student/Profile/Profile";
+import React from 'react';
+import Header from '../../Components/Student/Header/Header';
+import StudentProfile from '../../Components/Student/Profile/Profile';
 
 function Profile() {
   return (
