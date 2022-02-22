@@ -1,11 +1,22 @@
+.main-container {
+  padding: 1% 15%;
+}
+@media (max-width: 768px) {
+  .main-container {
+    padding: 0;
+  }
+  .student-address {
+    display: none;
+  }
+}
 .profile-div {
   margin-top: 5%;
-  margin-bottom: 5%;  
+  margin-bottom: 5%;
 }
 .left-div {
   padding: 3% 2%;
 }
-.down-div{
+.down-div {
   padding: 3% 2%;
 }
 .edit-profile-main {
@@ -16,23 +27,47 @@
   padding: 3% 15%;
   background-color: white;
 }
-.formData{
+.formData {
   white-space: nowrap;
   overflow: hidden;
-  width: 10px;
-  height: 25px;
+  /* width: 10px;
+  height: 25px; */
+  text-overflow: ellipsis; /* will make [...] at the end */
+  width: 370px;
 }
-.image-section{
+.image-section {
   margin-top: 6%;
 }
-.id-proof{
+.id-proof {
   width: 40%;
   height: 60%;
   border-radius: 2%;
+  cursor: pointer;
 }
-.edit-profile-btn{
+.id-proof-modal {
+  position: 'absolute';
+  transform: 'translate(-50%, -50%)';
+  width: 360px;
+  height: 450px;
+  border-radius: 2;
+  box-shadow: 24;
+  padding: 4;
+  align-items: 'center';
+}
+.id-proof-bigImg{
+  width: 350px;
+}
+.edit-profile-btn {
   background-color: #00d2b5;
   margin: 3% 2%;
+  padding: 1% 2%;
   color: white;
-  width: 15%;
+  font-size: 110%;
+  font-weight: 600;
+}
+.student-profile-table td,
+span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 }
