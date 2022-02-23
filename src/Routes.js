@@ -26,10 +26,7 @@ import TeacherLogin from './Pages/Teacher/TeacherLogin';
 import TeacherProfile from './Pages/Teacher/TeacherProfile';
 import TeacherSignup from './Pages/Teacher/TeacherSignup';
 
-
-
 function Routed() {
-
   const [admin, setAdmin] = useState(null);
   // const [teacher, setTeacher] = useState(null);
   // const [reviewer, setReviewer] = useState(null);
@@ -40,17 +37,16 @@ function Routed() {
     setAdmin(JSON.parse(localStorage.getItem('admin')));
     // setTeacher(JSON.parse(localStorage.getItem('teacher')));
     // setReviewer(JSON.parse(localStorage.getItem('reviewer')));
-    
   }, [location]);
 
   return (
     <div>
       <Routes>
         {/* Admin Routes */}
-        <Route path='/admin' element={admin ? <AdminHome /> : <Navigate to='/admin/login' />}></Route>
-        <Route path='/admin/teachers' element={admin ? <TeacherList /> : <Navigate to='/admin/login' />}></Route>
-        <Route path='/admin/batches' element={admin ? <Batches /> : <Navigate to='/admin/login' />}></Route>
-        <Route path='/admin/login' element={admin ? <Navigate to='/admin' /> : <AdminLogin />}></Route>
+        <Route path='/admin' element={<AdminHome />}></Route>
+        <Route path='/admin/teachers' element={<TeacherList />}></Route>
+        <Route path='/admin/batches' element={<Batches />}></Route>
+        <Route path='/admin/login' element={<AdminLogin />}></Route>
 
         {/* Teacher routes */}
         {/* Teacher Auth */}
