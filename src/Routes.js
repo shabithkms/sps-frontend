@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
-
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // Importing Reviewer Pages
 import ReviewerHome from '../src/Pages/Reviewer/Home';
 import ReviewerLogin from '../src/Pages/Reviewer/Login';
@@ -28,10 +25,10 @@ import TeacherHome from './Pages/Teacher/TeacherHome';
 import TeacherLogin from './Pages/Teacher/TeacherLogin';
 import TeacherProfile from './Pages/Teacher/TeacherProfile';
 import TeacherSignup from './Pages/Teacher/TeacherSignup';
-import { update_student } from './Redux/studentSlice';
+
+
 
 function Routed() {
-  const dispatch = useDispatch();
 
   const [admin, setAdmin] = useState(null);
   // const [teacher, setTeacher] = useState(null);
@@ -43,9 +40,7 @@ function Routed() {
     setAdmin(JSON.parse(localStorage.getItem('admin')));
     // setTeacher(JSON.parse(localStorage.getItem('teacher')));
     // setReviewer(JSON.parse(localStorage.getItem('reviewer')));
-    // setStudent(JSON.parse(localStorage.getItem('student')));
-    let student = JSON.parse(localStorage.getItem('student'));
-    dispatch(update_student(student));
+    
   }, [location]);
 
   return (

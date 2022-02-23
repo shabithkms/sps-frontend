@@ -1,9 +1,17 @@
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
+import { update_student } from './Redux/studentSlice';
 import Routes from './Routes';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    let student = JSON.parse(localStorage.getItem('student'));
+    dispatch(update_student(student));
+  });
   return (
     <div className='App'>
       {/* React hot toast */}
