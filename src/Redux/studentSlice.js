@@ -1,17 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const studentSlice = createSlice({
-  name: 'studentSlice',
+  name: 'student',
   initialState: {
-    Student: {},
+    student: {},
   },
   reducers: {
     update_student: (state, action) => {
-      state.Student = { ...action.payload };
+      state.student = { ...action.payload };
+    },
+    student_logout: (state) => {
+      state.student = null;
+      localStorage.removeItem('student');
     },
   },
 });
 
-export const { update_student } = studentSlice.actions;
+export const { update_student,student_logout } = studentSlice.actions;
 
 export default studentSlice.reducer;
