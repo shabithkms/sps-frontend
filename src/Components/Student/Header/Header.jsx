@@ -3,9 +3,12 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import { MenuItem, Menu } from '@mui/material';
 import './Header.css';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { student_logout } from '../../../Redux/studentSlice';
 
 function Header() {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -29,7 +32,7 @@ function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const doLogout = () => {
-    localStorage.removeItem('student');
+    dispatch(student_logout());
     navigate('/login');
   };
 
@@ -65,7 +68,7 @@ function Header() {
     <div>
       <Navbar collapseOnSelect expand='lg' bg='light' className='text-dark shadow-sm '>
         <Container>
-          <Navbar.Brand onClick={()=>navigate('/')}>
+          <Navbar.Brand onClick={() => navigate('/')}>
             <span className='logo-header'>SPS</span>
             <span className='logo-dot'>.</span>
           </Navbar.Brand>

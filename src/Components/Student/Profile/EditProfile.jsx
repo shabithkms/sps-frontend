@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import Validation from '../../../Constants/Validation';
 import EditStudentProfile from '../../../utils/EditStudentProfile';
@@ -9,7 +10,7 @@ import './Profile.css';
 function EditProfile() {
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
-  let student = JSON.parse(localStorage.getItem('student'));
+  let student = useSelector((state) => state.student.student);
   // React hook form
   const {
     register,
@@ -23,7 +24,9 @@ function EditProfile() {
       .then((res) => {
         navigate('/profile');
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

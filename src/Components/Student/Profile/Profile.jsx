@@ -1,6 +1,6 @@
-import { Backdrop, Box, Button, Fade, Modal } from '@mui/material';
+import { Box, Button, Fade, Modal } from '@mui/material';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import ReactCrop from 'react-image-crop';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +38,9 @@ function Profile() {
     transform: 'translate(-50%, -50%)',
     alignItems: 'center',
   };
-  // Get student data from local storage
+
+  // Get student data from store
+  // let student = useSelector((state) => state.student.student);
   let student = JSON.parse(localStorage.getItem('student'));
 
   const getCroppedImage = async () => {
@@ -72,11 +74,9 @@ function Profile() {
       axios
         .post(`${url}/editPhoto`, newData)
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data.student);
           toast.success(response.data.message);
-          localStorage.removeItem('student');
           localStorage.setItem('student', JSON.stringify(response.data.student));
-          student = JSON.parse(localStorage.getItem('student'));
           setBlob(null);
           setFile(null);
           setImage(null);
@@ -91,6 +91,10 @@ function Profile() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    student = JSON.parse(localStorage.getItem('student'));
+  }, [open]);
 
   return (
     <div className='container'>
