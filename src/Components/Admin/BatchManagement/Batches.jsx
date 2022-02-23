@@ -1,15 +1,12 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import { tableCellClasses } from '@mui/material/TableCell';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
-import Swal from 'sweetalert2';
 import {
-  InputLabel,
+  Backdrop,
+  Box,
+  Fade,
   FormControl,
+  InputLabel,
   MenuItem,
+  Modal,
+  Paper,
   Select,
   Table,
   TableBody,
@@ -17,15 +14,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Backdrop,
-  Box,
-  Modal,
-  Fade,
-  Typography,
   TextField,
-  Alert,
+  Typography
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import { addNewBatch, deleteBatchWithID, getAllBatches } from '../../../api/adminApi';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,7 +51,6 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 600,
-  height: 400,
   bgcolor: 'background.paper',
   borderRadius: 2,
   boxShadow: 24,
@@ -62,12 +59,9 @@ const style = {
 };
 
 function Batches() {
-  let url = process.env.REACT_APP_URL;
   const [batches, setBatches] = useState([]);
-  const [alert, setAlert] = useState('');
   const [open, setOpen] = useState(false);
   const [swalShow, setSwalShow] = useState(false);
-  const [age, setAge] = useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const {
@@ -78,62 +72,40 @@ function Batches() {
   } = useForm({
     defaultValues: {},
   });
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  // Add new Batch
   const addBatch = (data) => {
-    console.log(data);
-    try {
-      axios
-        .post(`${url}/admin/addBatch`, data)
-        .then((res) => {
-          console.log(res.data.message);
-          setOpen(false);
-          toast.success(res.data.message);
-          reset();
-        })
-        .catch((err) => {
-          console.log(err.response.data.errors);
-          setAlert(err.response.data.errors);
-          setTimeout(() => {
-            setAlert('');
-          }, 3000);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    addNewBatch(data)
+      .then((res) => {
+        setOpen(false);
+        toast.success(res.data.message);
+        reset();
+      })
+      .catch((err) => {
+        console.log(err.response.data.errors);
+        toast.error(err.response.data.errors);
+      });
   };
-
+  // Delete batch
   const deleteBatch = (BatchId) => {
-    try {
-      axios
-        .delete(`${url}/admin/deleteBatch/${BatchId}`)
-        .then((res) => {
-          console.log(res.data.message);
-          setSwalShow(false);
-        })
-        .catch((err) => {
-          toast.error(err.response.data.errors);
-        });
-    } catch (error) {
-      toast('Something error');
-    }
+    deleteBatchWithID(BatchId)
+      .then((res) => {
+        setSwalShow(false);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.errors);
+      });
   };
-
+  // get all batches
   const getBatches = () => {
-    try {
-      axios
-        .get(`${url}/admin/getAllBatches`)
-        .then((res) => {
-          setBatches(res.data.batches);
-        })
-        .catch((err) => {
-          console.log(err.response.data.errors);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    getAllBatches()
+      .then((res) => {
+        setBatches(res.data.batches);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  // alert for delete batch
   const setSwal = (id) => {
     console.log(id);
     Swal.fire({
@@ -169,14 +141,6 @@ function Batches() {
           </button>
         </div>
       </div>
-      <Toaster
-        toastOptions={{
-          style: {
-            background: 'black',
-            color: 'white',
-          },
-        }}
-      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label='customized table'>
           <TableHead>
@@ -195,15 +159,9 @@ function Batches() {
                     <StyledTableCell component='th' scope='row'>
                       {index + 1}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>
-                      {obj.BatchName}
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>
-                      {obj.Place}
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>
-                      {obj.Count}
-                    </StyledTableCell>
+                    <StyledTableCell align='center'>{obj.BatchName}</StyledTableCell>
+                    <StyledTableCell align='center'>{obj.Place}</StyledTableCell>
+                    <StyledTableCell align='center'>{obj.Count}</StyledTableCell>
                     <StyledTableCell align='center'>
                       <button
                         className='btn btn-danger'
@@ -234,27 +192,13 @@ function Batches() {
       >
         <Fade in={open}>
           <Box sx={style} className='container '>
-            <Typography
-              id='transition-modal-title'
-              variant='h3'
-              align='center'
-              component='h1'
-              fontWeight={'500'}
-            >
+            <Typography id='transition-modal-title' variant='h3' align='center' component='h1' fontWeight={'500'}>
               Add new Batch
             </Typography>
-            {alert ? (
-              <Alert className='mb-3 mt-2' severity='error'>
-                {alert}
-              </Alert>
-            ) : (
-              ''
-            )}
             <form onSubmit={handleSubmit(addBatch)}>
               <TextField
                 margin='normal'
                 fullWidth
-                autoCapitalize='on'
                 {...register('BatchName', {
                   required: 'This field is required',
                   minLength: {
@@ -270,28 +214,20 @@ function Batches() {
                 type='Text'
                 id='Name'
               />
-              {errors.BatchName && (
-                <span className='error'>{errors.BatchName.message}</span>
-              )}
+              {errors.BatchName && <span className='error'>{errors.BatchName.message}</span>}
               <FormControl fullWidth className='mt-3'>
-                <InputLabel id='demo-simple-select-label'>
-                  Select Place
-                </InputLabel>
+                <InputLabel id='demo-simple-select-label'>Select Place</InputLabel>
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
-                  value={age}
                   {...register('Place', { required: true })}
                   label='select students'
-                  onChange={handleChange}
                 >
                   <MenuItem selected>Select place</MenuItem>
                   <MenuItem value={'Calicut'}>Calicut</MenuItem>
                   <MenuItem value={'Kochi'}>Kochi</MenuItem>
                 </Select>
-                {errors.Place && (
-                  <span className='error'>This field is required</span>
-                )}
+                {errors.Place && <span className='error'>This field is required</span>}
               </FormControl>
 
               <center>

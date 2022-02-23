@@ -71,13 +71,38 @@ export const deleteTeacherWithID = (teacherId) => {
 };
 // Admin batch management
 // Add new Batch
-
 export const addNewBatch = (formData) => {
   return new Promise((resolve, reject) => {
     axios
       .post(`${ADMIN_BASE_URL}/addBatch`, formData)
       .then((res) => {
         resolve(res.data.message);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+// Delete batch with id
+export const deleteBatchWithID = (BatchId) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(`${ADMIN_BASE_URL}/deleteBatch/${BatchId}`)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+// getAllBatches
+export const getAllBatches = () => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${ADMIN_BASE_URL}/getAllBatches`)
+      .then((res) => {
+        resolve(res);
       })
       .catch((err) => {
         reject(err);

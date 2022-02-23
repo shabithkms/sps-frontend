@@ -1,17 +1,10 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import {
-  ListItemIcon,
-  ListItemText,
-  ListItem,
-  Box,
-  Drawer,
-  List,
-} from '@mui/material';
-import HomeIcon from '@mui/icons-material/HomeOutlined';
-import PersonIcon from '@mui/icons-material/PersonOutlined';
-import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import EventIcon from '@mui/icons-material/Event';
+import HomeIcon from '@mui/icons-material/HomeOutlined';
+import LogoutIcon from '@mui/icons-material/LogoutOutlined';
+import PersonIcon from '@mui/icons-material/PersonOutlined';
+import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 import { useNavigate } from 'react-router';
 
 const drawerWidth = 200;
@@ -25,8 +18,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function Sidebar(props) {
-  console.log(props);
+export default function Sidebar() {
   const navigate = useNavigate();
 
   const doLogout = () => {

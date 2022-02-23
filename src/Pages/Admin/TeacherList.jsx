@@ -2,8 +2,7 @@ import React from "react";
 import Sidebar from "../../Components/Admin/AdminSidebar/Sidebar";
 import TeacherTable from "../../Components/Admin/TeacherList/TeacherTable";
 
-function AdminHome(props) {
-  console.log(props);
+function AdminHome() {
   return (
     <div className="d-flex">
       <Sidebar />
